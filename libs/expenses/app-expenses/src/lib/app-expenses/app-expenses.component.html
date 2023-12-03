@@ -1,1 +1,36 @@
-<p>app-expenses works!</p>
+<form>
+  <mat-form-field>
+    <mat-label>Amount</mat-label>
+    <input matInput />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Category</mat-label>
+    <mat-select>
+      <mat-option
+        *ngFor="let category of categories$ | async"
+        [value]="category['id']"
+        >{{ category['name'] }}</mat-option
+      >
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Choose a date</mat-label>
+    <input matInput [matDatepicker]="picker" />
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <button mat-flat-button color="primary">Add Expense</button>
+</form>
+
+<!-- TODO: group expenses by day? -->
+<mat-card *ngFor="let expense of expenses$ | async">
+  <!-- TODO: add an amount pipe and date pipe -->
+  <mat-card-header>
+    <mat-card-title>{{ expense['date'] }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>{{ expense['amount'] }}</mat-card-content>
+</mat-card>
