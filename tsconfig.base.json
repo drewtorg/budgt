@@ -19,7 +19,7 @@
       "@budgt/app-expenses": ["libs/expenses/app-expenses/src/index.ts"],
       "@budgt/app-login": ["libs/login/app-login/src/index.ts"],
       "@budgt/app-savings": ["libs/savings/app-savings/src/index.ts"],
-      "@budgt/ui-nav-rail": ["libs/shared/components/src/index.ts"]
+      "@budgt/shared/components": ["libs/shared/components/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

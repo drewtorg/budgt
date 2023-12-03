@@ -8,24 +8,17 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/budgt",
         "index": "apps/budgt/src/index.html",
         "browser": "apps/budgt/src/main.ts",
-        "polyfills": [
-          "zone.js"
-        ],
+        "polyfills": ["zone.js"],
         "tsConfig": "apps/budgt/tsconfig.app.json",
-        "assets": [
-          "apps/budgt/src/favicon.ico",
-          "apps/budgt/src/assets"
-        ],
+        "assets": ["apps/budgt/src/favicon.ico", "apps/budgt/src/assets"],
         "styles": [
           "@angular/material/prebuilt-themes/deeppurple-amber.css",
-          "apps/budgt/src/styles.css"
+          "apps/budgt/src/styles.scss"
         ],
         "scripts": []
       },
@@ -73,21 +66,14 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "apps/budgt/**/*.ts",
-          "apps/budgt/**/*.html"
-        ]
+        "lintFilePatterns": ["apps/budgt/**/*.ts", "apps/budgt/**/*.html"]
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/{projectRoot}"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "apps/budgt/jest.config.ts"
       }

@@ -1,0 +1,12 @@
+.submit-btn {
+  margin-left: 16px;
+}
+
+.category-cell {
+  display: flex;
+  align-items: center;
+}
+
+.category-cell button {
+  margin-left: 8px;
+}

@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { NavRailRouteItem, UiNavRailComponent } from '@budgt/ui-nav-rail';
+import { NavRailRouteItem, UiNavRailComponent } from '@budgt/shared/components';
 import { tap } from 'rxjs';
 
 @Component({
