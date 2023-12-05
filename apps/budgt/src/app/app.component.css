@@ -1,6 +1,13 @@
 .main {
-  padding-left: 96px;
+  padding-bottom: 74px;
   height: 100vh;
+}
+
+@media (min-width: 768px) {
+  .main {
+    padding-left: 96px;
+    padding-bottom: 0;
+  }
 }
 
 .router-outlet {

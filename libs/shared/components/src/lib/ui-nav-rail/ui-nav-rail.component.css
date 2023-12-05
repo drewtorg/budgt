@@ -1,16 +1,33 @@
 nav {
-  align-items: center;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
   gap: 8px;
-  height: 100%;
-  left: 0;
-  overflow-y: auto;
-  padding: 24px 0;
+  width: 100%;
+  padding: 12px 0 16px;
   position: fixed;
-  top: 0;
-  width: 96px;
+  left: 0;
+  bottom: 0;
   background-color: #f3f6fb;
+}
+
+@media (min-width: 768px) {
+  nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    height: 100%;
+    left: 0;
+    overflow-y: auto;
+    padding: 24px 0;
+    position: fixed;
+    top: 0;
+    width: 96px;
+    background-color: #f3f6fb;
+  }
 }
 
 nav a {
@@ -20,7 +37,12 @@ nav a {
   flex-direction: column;
   align-items: center;
   color: #202124;
-  height: 56px;
+}
+
+@media (min-width: 768px) {
+  nav a {
+    height: 56px;
+  }
 }
 
 nav a .icon {
