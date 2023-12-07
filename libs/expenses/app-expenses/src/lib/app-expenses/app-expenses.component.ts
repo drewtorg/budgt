@@ -14,15 +14,14 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import {
-  AsyncPipe,
-  CurrencyPipe,
-  JsonPipe,
-  NgFor,
-  NgIf,
-} from '@angular/common';
+import { AsyncPipe, CurrencyPipe, NgFor, NgIf } from '@angular/common';
 import { Observable, tap } from 'rxjs';
-import { AmountPipe } from '@budgt/shared/components';
+import {
+  AmountPipe,
+  MonthYearPipe,
+  UiPageComponent,
+  YearMonthDayPipe,
+} from '@budgt/shared/components';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CategoryService, ExpenseService } from '@budgt/shared/services';
 import { Expense } from '@budgt/shared/types';
@@ -31,6 +30,11 @@ import { Expense } from '@budgt/shared/types';
   selector: 'budgt-app-expenses',
   standalone: true,
   imports: [
+    NgIf,
+    NgFor,
+    AsyncPipe,
+    RouterModule,
+    ReactiveFormsModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
@@ -41,21 +45,17 @@ import { Expense } from '@budgt/shared/types';
     MatDatepickerModule,
     MatTableModule,
     MatSortModule,
-    ReactiveFormsModule,
-    AsyncPipe,
-    NgFor,
-    JsonPipe,
     CurrencyPipe,
     AmountPipe,
-    RouterModule,
-    NgIf,
+    MonthYearPipe,
+    UiPageComponent,
   ],
   templateUrl: './app-expenses.component.html',
   styleUrl: './app-expenses.component.css',
 })
 export class AppExpensesComponent implements OnInit {
-  @Input() month = '';
-  @Input() year = '';
+  @Input() month = 0;
+  @Input() year = 0;
 
   @ViewChild(MatSort) set sort(sort: MatSort | undefined) {
     if (sort) {
@@ -69,27 +69,40 @@ export class AppExpensesComponent implements OnInit {
   expenseService = inject(ExpenseService);
   categoryService = inject(CategoryService);
 
+  yearMonthDayPipe = new YearMonthDayPipe();
+
   expenses$!: Observable<Expense[]>;
   categories$ = this.categoryService.getCategories();
 
   displayedColumns = ['date', 'amount', 'category'];
 
   expenseForm = this.fb.group({
-    amount: ['', Validators.required],
+    amount: ['', [Validators.required, Validators.pattern('[0-9]*')]],
     category: ['', Validators.required],
     date: [new Date(), Validators.required],
   });
 
   dataSource = new MatTableDataSource();
 
-  ngOnInit() {
-    if (!this.month) {
-      this.month = (new Date().getMonth() + 1).toString();
-    }
+  get currentMonth() {
+    return {
+      year: this.year,
+      month: this.month,
+    };
+  }
 
-    if (!this.year) {
-      this.year = new Date().getFullYear().toString();
-    }
+  ngOnInit() {
+    this.loadPage();
+  }
+
+  loadPage() {
+    this.month = this.month
+      ? parseInt(this.month as unknown as string)
+      : new Date().getMonth() + 1;
+    this.year = this.year
+      ? parseInt(this.year as unknown as string)
+      : new Date().getFullYear();
+
     this.expenses$ = this.expenseService
       .getExpenses(this.month, this.year)
       .pipe(
@@ -97,10 +110,19 @@ export class AppExpensesComponent implements OnInit {
           (data) =>
             (this.dataSource.data = data.map((d) => ({
               ...d,
-              date: [d.year, d.month, d.day].join('-'),
+              date: this.yearMonthDayPipe.transform(d),
             }))),
         ),
       );
+  }
+
+  normalizeQueryParams() {
+    this.month = this.month
+      ? parseInt(this.month as unknown as string)
+      : new Date().getMonth() + 1;
+    this.year = this.year
+      ? parseInt(this.year as unknown as string)
+      : new Date().getFullYear();
   }
 
   onSubmit() {
@@ -112,15 +134,15 @@ export class AppExpensesComponent implements OnInit {
       this.expenseForm.controls.date.value
         .toISOString()
         .split('T')[0]
-        .split('-') ?? [];
+        .split('-')
+        .map((s) => parseInt(s)) ?? [];
     const expense = {
-      id: '',
-      amount: this.expenseForm.controls.amount.value,
+      amount: parseInt(this.expenseForm.controls.amount.value),
       category: this.expenseForm.controls.category.value,
       year: dateSections[0],
       month: dateSections[1],
       day: dateSections[2],
-    };
+    } as Expense;
 
     this.expenseService.addExpense(expense);
 
@@ -133,5 +155,28 @@ export class AppExpensesComponent implements OnInit {
 
   onRemove(id: string) {
     this.expenseService.removeExpense(id);
+  }
+
+  onChangeMonth(increment: boolean) {
+    this.normalizeQueryParams();
+
+    if (increment && this.month === 12) {
+      this.month = 1;
+      this.year++;
+    } else if (!increment && this.month === 1) {
+      this.month = 12;
+      this.year--;
+    } else {
+      this.month += increment ? 1 : -1;
+    }
+
+    this.router.navigate(['expenses'], {
+      queryParams: {
+        month: this.month,
+        year: this.year,
+      },
+    });
+
+    this.loadPage();
   }
 }

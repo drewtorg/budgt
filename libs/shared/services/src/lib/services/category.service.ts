@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { Category } from '@budgt/shared/types';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +18,6 @@ export class CategoryService {
     );
     return collectionData(categories, {
       idField: 'id',
-    }).pipe(map((categories) => categories.map((c) => c as Category)));
+    }) as Observable<Category[]>;
   }
 }

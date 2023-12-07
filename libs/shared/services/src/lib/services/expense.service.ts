@@ -10,7 +10,7 @@ import {
   where,
 } from '@angular/fire/firestore';
 import { Expense } from '@budgt/shared/types';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +18,7 @@ import { Observable, map } from 'rxjs';
 export class ExpenseService {
   private firestore = inject(Firestore);
 
-  getExpenses(month: string, year: string): Observable<Expense[]> {
+  getExpenses(month: number, year: number): Observable<Expense[]> {
     const expenses = query(
       collection(this.firestore, 'budget', 'fhkEtoq6d1eNN8hfTkLg', 'expenses'),
       where('month', '==', month),
@@ -26,7 +26,7 @@ export class ExpenseService {
     );
     return collectionData(expenses, {
       idField: 'id',
-    }).pipe(map((expenses) => expenses.map((e) => e as Expense)));
+    }) as Observable<Expense[]>;
   }
 
   addExpense(expense: Expense) {
@@ -34,7 +34,6 @@ export class ExpenseService {
       collection(this.firestore, 'budget', 'fhkEtoq6d1eNN8hfTkLg', 'expenses'),
       {
         ...expense,
-        id: undefined,
       },
     );
   }

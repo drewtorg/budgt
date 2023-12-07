@@ -19,8 +19,8 @@
       "@budgt/app-expenses": ["libs/expenses/app-expenses/src/index.ts"],
       "@budgt/app-login": ["libs/login/app-login/src/index.ts"],
       "@budgt/app-savings": ["libs/savings/app-savings/src/index.ts"],
-      "@budgt/shared/services": ["libs/shared/services/src/index.ts"],
       "@budgt/shared/components": ["libs/shared/components/src/index.ts"],
+      "@budgt/shared/services": ["libs/shared/services/src/index.ts"],
       "@budgt/shared/types": ["libs/shared/types/src/index.ts"]
     }
   },
