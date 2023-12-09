@@ -109,6 +109,10 @@
         } @else {
           <p class="no-expenses">No expenses for this month</p>
         }
+      } @else {
+        <div class="spinner-container">
+          <mat-spinner diameter="50" class="spinner"></mat-spinner>
+        </div>
       }
     </mat-card-content>
     <mat-card-footer>

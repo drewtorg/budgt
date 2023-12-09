@@ -7,6 +7,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import {
+  MatProgressSpinner,
+  MatProgressSpinnerModule,
+} from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -48,6 +52,7 @@ import { InputMaskModule } from '@ngneat/input-mask';
     MatDatepickerModule,
     MatTableModule,
     MatSortModule,
+    MatProgressSpinnerModule,
     CurrencyPipe,
     AmountPipe,
     MonthYearPipe,
