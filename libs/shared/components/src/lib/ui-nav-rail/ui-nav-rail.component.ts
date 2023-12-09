@@ -1,8 +1,8 @@
-import { Component, Input } from '@angular/core';
 import { NgClass, NgFor } from '@angular/common';
+import { Component, Input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { NavRailRouteItem } from '../types';
 import { RouterModule } from '@angular/router';
+import { NavRailRouteItem } from '../types';
 
 @Component({
   selector: 'budgt-ui-nav-rail',

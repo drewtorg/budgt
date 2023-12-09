@@ -1,4 +1,10 @@
+import { AsyncPipe, CurrencyPipe, NgFor, NgIf } from '@angular/common';
 import { Component, Input, OnInit, ViewChild, inject } from '@angular/core';
+import {
+  NonNullableFormBuilder,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatNativeDateModule } from '@angular/material/core';
@@ -11,13 +17,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import {
-  NonNullableFormBuilder,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { AsyncPipe, CurrencyPipe, NgFor, NgIf } from '@angular/common';
-import { Observable, map, take, tap } from 'rxjs';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import {
   AmountPipe,
   MonthYearPipe,
@@ -25,11 +25,11 @@ import {
   YearMonthDayPipe,
   amountMask,
 } from '@budgt/shared/components';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { CategoryService, ExpenseService } from '@budgt/shared/services';
 import { parseDateParts } from '@budgt/shared/functions';
+import { CategoryService, ExpenseService } from '@budgt/shared/services';
 import { Expense } from '@budgt/shared/types';
 import { InputMaskModule } from '@ngneat/input-mask';
+import { Observable, map, take, tap } from 'rxjs';
 
 @Component({
   selector: 'budgt-app-expenses',
