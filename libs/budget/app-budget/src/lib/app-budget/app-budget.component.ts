@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
 import { UiPageComponent } from '@budgt/shared/components';
 
 @Component({
   selector: 'budgt-app-budget',
   standalone: true,
-  imports: [UiPageComponent],
+  imports: [MatCardModule, UiPageComponent],
   templateUrl: './app-budget.component.html',
   styleUrl: './app-budget.component.css',
 })

@@ -10,6 +10,11 @@
 }
 
 .router-outlet {
-  margin-top: 48px;
   padding-bottom: 100px;
+}
+
+@media (min-width: 768px) {
+  .router-outlet {
+    margin-top: 48px;
+  }
 }
