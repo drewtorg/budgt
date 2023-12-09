@@ -13,8 +13,13 @@
         (ngSubmit)="onSubmit()"
       >
         <mat-form-field>
-          <mat-label>Amount</mat-label>
-          <input formControlName="amount" matInput inputmode="numeric" />
+          <mat-label>Amount (SEK)</mat-label>
+          <input
+            formControlName="amount"
+            matInput
+            inputmode="numeric"
+            [inputMask]="amountMask"
+          />
         </mat-form-field>
 
         <mat-form-field>

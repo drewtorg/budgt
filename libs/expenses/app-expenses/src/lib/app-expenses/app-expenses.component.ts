@@ -22,10 +22,12 @@ import {
   MonthYearPipe,
   UiPageComponent,
   YearMonthDayPipe,
+  amountMask,
 } from '@budgt/shared/components';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CategoryService, ExpenseService } from '@budgt/shared/services';
 import { Expense } from '@budgt/shared/types';
+import { InputMaskModule } from '@ngneat/input-mask';
 
 @Component({
   selector: 'budgt-app-expenses',
@@ -50,6 +52,7 @@ import { Expense } from '@budgt/shared/types';
     AmountPipe,
     MonthYearPipe,
     UiPageComponent,
+    InputMaskModule,
   ],
   templateUrl: './app-expenses.component.html',
   styleUrl: './app-expenses.component.css',
@@ -80,10 +83,11 @@ export class AppExpensesComponent implements OnInit {
   displayedColumns = ['date', 'amount', 'category'];
 
   expenseForm = this.fb.group({
-    amount: ['', [Validators.required, Validators.pattern('[0-9]*')]],
+    amount: ['' as unknown as number, [Validators.required]],
     category: ['', Validators.required],
     date: [new Date(), Validators.required],
   });
+  amountMask = amountMask;
 
   dataSource = new MatTableDataSource();
 
@@ -140,7 +144,7 @@ export class AppExpensesComponent implements OnInit {
         .split('-')
         .map((s) => parseInt(s)) ?? [];
     const expense = {
-      amount: parseInt(this.expenseForm.controls.amount.value),
+      amount: this.expenseForm.controls.amount.value,
       category: this.expenseForm.controls.category.value,
       year: dateSections[0],
       month: dateSections[1],
@@ -150,7 +154,7 @@ export class AppExpensesComponent implements OnInit {
     this.expenseService.addExpense(expense);
 
     this.expenseForm.reset({
-      amount: '',
+      amount: 0,
       category: '',
       date: new Date(),
     });

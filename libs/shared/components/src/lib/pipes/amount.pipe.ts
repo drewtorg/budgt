@@ -11,6 +11,9 @@ export class AmountPipe implements PipeTransform {
       style: 'currency',
       currency: 'SEK',
       minimumFractionDigits: digits,
-    }).format(value);
+      maximumFractionDigits: 2,
+    })
+      .format(value)
+      .replace('kr', 'SEK');
   }
 }
