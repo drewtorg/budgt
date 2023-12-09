@@ -41,7 +41,7 @@ export class AddExpenseFormComponent {
   categoryService = inject(CategoryService);
   snackbar = inject(MatSnackBar);
 
-  categories$ = this.categoryService.getCategories();
+  categories$ = this.categoryService.getExpenseCategories();
 
   expenseForm = this.fb.group({
     amount: ['' as unknown as number, [Validators.required]],

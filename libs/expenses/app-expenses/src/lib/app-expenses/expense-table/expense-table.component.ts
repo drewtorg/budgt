@@ -9,7 +9,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { AmountPipe, YearMonthDayPipe } from '@budgt/shared/components';
 import { ExpenseService } from '@budgt/shared/services';
 import { Expense } from '@budgt/shared/types';
-import { map, take, tap } from 'rxjs';
+import { tap } from 'rxjs';
 
 @Component({
   selector: 'budgt-expense-table',
@@ -53,23 +53,15 @@ export class ExpenseTableComponent {
 
   displayedColumns = ['date', 'amount', 'category'];
 
-  onRemove(id: string) {
-    this.expenses$
-      .pipe(
-        take(1),
-        map((expenses) => expenses.find((e) => e.id === id) as Expense),
-        tap((expense) => {
-          this.expenseService.removeExpense(id);
+  onRemove(expense: Expense) {
+    this.expenseService.removeExpense(expense.id);
 
-          this.snackbar.open(
-            'Removed expense for ' + this.amountPipe.transform(expense.amount),
-            'Dismiss',
-            {
-              duration: 3000,
-            },
-          );
-        }),
-      )
-      .subscribe();
+    this.snackbar.open(
+      'Removed expense for ' + this.amountPipe.transform(expense.amount),
+      'Dismiss',
+      {
+        duration: 3000,
+      },
+    );
   }
 }

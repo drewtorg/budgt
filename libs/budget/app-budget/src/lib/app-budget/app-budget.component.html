@@ -7,31 +7,37 @@
         <mat-card-title> Income </mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <h4>Fixed Income</h4>
-        <h4>Variable Income</h4>
+        <budgt-income-table
+          [income]="incomeCategories$ | async"
+        ></budgt-income-table>
       </mat-card-content>
+      <mat-card-footer>
+        <button mat-button color="primary">Add Row</button>
+      </mat-card-footer>
     </mat-card>
 
     <mat-card>
       <mat-card-header>
-        <mat-card-title> Recurring Expenses </mat-card-title>
+        <mat-card-title> Expenses </mat-card-title>
       </mat-card-header>
       <mat-card-content>
         <h4>Needs</h4>
         <h4>Dreams</h4>
         <h4>Wants</h4>
       </mat-card-content>
+      <mat-card-footer>
+        <button mat-button color="primary">Add Row</button>
+      </mat-card-footer>
     </mat-card>
 
     <mat-card>
       <mat-card-header>
-        <mat-card-title> Revolving Expenses </mat-card-title>
+        <mat-card-title> Current Saving Buckets </mat-card-title>
       </mat-card-header>
-      <mat-card-content>
-        <h4>Needs</h4>
-        <h4>Dreams</h4>
-        <h4>Wants</h4>
-      </mat-card-content>
+      <mat-card-content> </mat-card-content>
+      <mat-card-footer>
+        <button mat-button color="primary">Add Bucket</button>
+      </mat-card-footer>
     </mat-card>
   </div>
 </budgt-ui-page>
