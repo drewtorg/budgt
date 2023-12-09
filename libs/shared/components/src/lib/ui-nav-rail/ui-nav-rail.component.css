@@ -10,23 +10,19 @@ nav {
   left: 0;
   bottom: 0;
   background-color: #f3f6fb;
+  z-index: 8;
 }
 
 @media (min-width: 768px) {
   nav {
-    display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: flex-start;
-    gap: 8px;
     height: 100%;
     left: 0;
     overflow-y: auto;
     padding: 24px 0;
-    position: fixed;
     top: 0;
     width: 96px;
-    background-color: #f3f6fb;
   }
 }
 

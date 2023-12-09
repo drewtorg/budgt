@@ -19,7 +19,14 @@
   }
 
   .column {
-    grid-column-start: 4;
+    grid-column-start: 3;
     grid-column-end: span 8;
+  }
+}
+
+@media (min-width: 1248px) {
+  .column {
+    grid-column-start: 4;
+    grid-column-end: span 6;
   }
 }
