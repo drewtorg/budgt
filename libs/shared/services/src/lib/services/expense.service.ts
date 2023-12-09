@@ -7,7 +7,6 @@ import {
   deleteDoc,
   doc,
   query,
-  where,
 } from '@angular/fire/firestore';
 import { Expense } from '@budgt/shared/types';
 import { Observable } from 'rxjs';
@@ -18,11 +17,9 @@ import { Observable } from 'rxjs';
 export class ExpenseService {
   private firestore = inject(Firestore);
 
-  getExpenses(month: number, year: number): Observable<Expense[]> {
+  getExpenses(): Observable<Expense[]> {
     const expenses = query(
       collection(this.firestore, 'budget', 'fhkEtoq6d1eNN8hfTkLg', 'expenses'),
-      where('month', '==', month),
-      where('year', '==', year),
     );
     return collectionData(expenses, {
       idField: 'id',

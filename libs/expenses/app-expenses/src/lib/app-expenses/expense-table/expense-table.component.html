@@ -1,0 +1,68 @@
+@if (expenses$ | async; as expenses) {
+  @if (expenses.length) {
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      matSortActive="date"
+      matSortDirection="desc"
+      class="expense-table"
+    >
+      <ng-container matColumnDef="date">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="Sort by date"
+        >
+          Date
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.date | date: 'MMM d' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="amount">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="Sort by amount"
+        >
+          Amount
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.amount | amount }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="category">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="Sort by category"
+        >
+          Category
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <div class="category-cell">
+            <div>{{ element.category }}</div>
+            <button mat-icon-button (click)="onRemove(element.id)">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  } @else {
+    <p class="no-expenses">No expenses for this month</p>
+  }
+} @else {
+  <div class="spinner-container">
+    <mat-spinner diameter="50" class="spinner"></mat-spinner>
+  </div>
+}

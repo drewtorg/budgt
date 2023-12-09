@@ -6,8 +6,8 @@ import { Pipe, PipeTransform } from '@angular/core';
   pure: true,
 })
 export class YearMonthDayPipe implements PipeTransform {
-  transform(value: { day: number; month: number; year: number }): string {
-    const date = new Date(value.year, value.month - 1, value.day);
+  transform(value: string): string {
+    const date = new Date(value);
     return new Intl.DateTimeFormat('sv-SE', {
       year: 'numeric',
       month: '2-digit',
