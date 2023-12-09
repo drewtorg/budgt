@@ -1,3 +1,3 @@
 export * from './lib/types/budget';
 export * from './lib/types/category';
-export * from './lib/types/expenses';
+export * from './lib/types/expense';
