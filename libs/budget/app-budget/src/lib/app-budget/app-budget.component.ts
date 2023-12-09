@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { UiPageComponent } from '@budgt/shared/components';
 
 @Component({
   selector: 'budgt-app-budget',
   standalone: true,
-  imports: [CommonModule],
+  imports: [UiPageComponent],
   templateUrl: './app-budget.component.html',
   styleUrl: './app-budget.component.css',
 })

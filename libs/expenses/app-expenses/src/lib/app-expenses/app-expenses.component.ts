@@ -1,6 +1,7 @@
 import { Component, Input, ViewChild, inject, OnInit } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,7 +16,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AsyncPipe, CurrencyPipe, NgFor, NgIf } from '@angular/common';
-import { Observable, tap } from 'rxjs';
+import { Observable, map, take, tap } from 'rxjs';
 import {
   AmountPipe,
   MonthYearPipe,
@@ -68,8 +69,10 @@ export class AppExpensesComponent implements OnInit {
   fb = inject(NonNullableFormBuilder);
   expenseService = inject(ExpenseService);
   categoryService = inject(CategoryService);
+  snackbar = inject(MatSnackBar);
 
   yearMonthDayPipe = new YearMonthDayPipe();
+  amountPipe = new AmountPipe();
 
   expenses$!: Observable<Expense[]>;
   categories$ = this.categoryService.getCategories();
@@ -146,15 +149,39 @@ export class AppExpensesComponent implements OnInit {
 
     this.expenseService.addExpense(expense);
 
-    this.expenseForm.setValue({
+    this.expenseForm.reset({
       amount: '',
       category: '',
       date: new Date(),
     });
+
+    this.snackbar.open(
+      'Added expense for ' + this.amountPipe.transform(expense.amount),
+      'Dismiss',
+      {
+        duration: 3000,
+      },
+    );
   }
 
   onRemove(id: string) {
-    this.expenseService.removeExpense(id);
+    this.expenses$
+      .pipe(
+        take(1),
+        map((expenses) => expenses.find((e) => e.id === id) as Expense),
+        tap((expense) => {
+          this.expenseService.removeExpense(id);
+
+          this.snackbar.open(
+            'Removed expense for ' + this.amountPipe.transform(expense.amount),
+            'Dismiss',
+            {
+              duration: 3000,
+            },
+          );
+        }),
+      )
+      .subscribe();
   }
 
   onChangeMonth(increment: boolean) {
