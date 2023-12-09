@@ -12,7 +12,7 @@
         [formGroup]="expenseForm"
         (ngSubmit)="onSubmit()"
       >
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Amount (SEK)</mat-label>
           <input
             formControlName="amount"
@@ -20,9 +20,12 @@
             inputmode="numeric"
             [inputMask]="amountMask"
           />
+          @if (expenseForm.controls.amount.invalid) {
+            <mat-error>You must enter a value</mat-error>
+          }
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Category</mat-label>
           <mat-select formControlName="category">
             <mat-option
@@ -31,9 +34,12 @@
               >{{ category['name'] }}</mat-option
             >
           </mat-select>
+          @if (expenseForm.controls.category.invalid) {
+            <mat-error>You must select a value</mat-error>
+          }
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field appearance="outline">
           <mat-label>Choose a date</mat-label>
           <input formControlName="date" matInput [matDatepicker]="picker" />
           <mat-datepicker-toggle
@@ -41,6 +47,9 @@
             [for]="picker"
           ></mat-datepicker-toggle>
           <mat-datepicker touchUi #picker></mat-datepicker>
+          @if (expenseForm.controls.date.invalid) {
+            <mat-error>You must select a value</mat-error>
+          }
         </mat-form-field>
 
         <button mat-flat-button color="primary" class="submit-btn">Add</button>
