@@ -1,5 +1,5 @@
 {
-  "name": "services",
+  "name": "shared-services",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/shared/services/src",
   "prefix": "budgt",

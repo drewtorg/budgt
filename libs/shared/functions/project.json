@@ -1,7 +1,7 @@
 {
-  "name": "savings-app-savings",
+  "name": "shared-functions",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/savings/app-savings/src",
+  "sourceRoot": "libs/shared/functions/src",
   "prefix": "budgt",
   "tags": [],
   "projectType": "library",
@@ -10,18 +10,12 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/savings/app-savings/jest.config.ts"
+        "jestConfig": "libs/shared/functions/jest.config.ts"
       }
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "libs/savings/app-savings/**/*.ts",
-          "libs/savings/app-savings/**/*.html"
-        ]
-      }
+      "outputs": ["{options.outputFile}"]
     }
   }
 }

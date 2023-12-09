@@ -1,5 +1,5 @@
 {
-  "name": "app-budget",
+  "name": "budget-app-budget",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/budget/app-budget/src",
   "prefix": "budgt",

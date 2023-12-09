@@ -1,19 +1,16 @@
-import { Component, Input, ViewChild, inject, OnInit } from '@angular/core';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSelectModule } from '@angular/material/select';
+import { Component, Input, OnInit, ViewChild, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
-import {
-  MatProgressSpinner,
-  MatProgressSpinnerModule,
-} from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import {
   NonNullableFormBuilder,
   ReactiveFormsModule,
@@ -30,6 +27,7 @@ import {
 } from '@budgt/shared/components';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CategoryService, ExpenseService } from '@budgt/shared/services';
+import { parseDateParts } from '@budgt/shared/functions';
 import { Expense } from '@budgt/shared/types';
 import { InputMaskModule } from '@ngneat/input-mask';
 
@@ -108,12 +106,7 @@ export class AppExpensesComponent implements OnInit {
   }
 
   loadPage() {
-    this.month = this.month
-      ? parseInt(this.month as unknown as string)
-      : new Date().getMonth() + 1;
-    this.year = this.year
-      ? parseInt(this.year as unknown as string)
-      : new Date().getFullYear();
+    this.normalizeQueryParams();
 
     this.expenses$ = this.expenseService
       .getExpenses(this.month, this.year)
@@ -142,24 +135,16 @@ export class AppExpensesComponent implements OnInit {
       return;
     }
 
-    const dateSections =
-      this.expenseForm.controls.date.value
-        .toISOString()
-        .split('T')[0]
-        .split('-')
-        .map((s) => parseInt(s)) ?? [];
     const expense = {
+      ...parseDateParts(this.expenseForm.controls.date.value),
       amount: this.expenseForm.controls.amount.value,
       category: this.expenseForm.controls.category.value,
-      year: dateSections[0],
-      month: dateSections[1],
-      day: dateSections[2],
     } as Expense;
 
     this.expenseService.addExpense(expense);
 
     this.expenseForm.reset({
-      amount: 0,
+      amount: '' as unknown as number,
       category: '',
       date: new Date(),
     });

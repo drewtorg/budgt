@@ -1,5 +1,5 @@
 {
-  "name": "app-login",
+  "name": "login-app-login",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/login/app-login/src",
   "prefix": "budgt",
