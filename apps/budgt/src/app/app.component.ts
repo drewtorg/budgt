@@ -40,6 +40,14 @@ export class AppComponent {
   }
 
   setActiveRoutes() {
-    this.routes.forEach((r) => (r.active = this.router.isActive(r.href, true)));
+    this.routes.forEach(
+      (r) =>
+        (r.active = this.router.isActive(r.href, {
+          queryParams: 'ignored',
+          fragment: 'ignored',
+          paths: 'exact',
+          matrixParams: 'ignored',
+        })),
+    );
   }
 }
