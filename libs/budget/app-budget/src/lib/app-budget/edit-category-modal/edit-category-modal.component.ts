@@ -11,8 +11,10 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { amountMask } from '@budgt/shared/components';
 import { CategoryService } from '@budgt/shared/services';
 import { Category, CategoryType, Variability } from '@budgt/shared/types';
+import { InputMaskModule } from '@ngneat/input-mask';
 @Component({
   selector: 'budgt-edit-category-modal',
   standalone: true,
@@ -25,10 +27,12 @@ import { Category, CategoryType, Variability } from '@budgt/shared/types';
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
+    InputMaskModule,
   ],
   templateUrl: './edit-category-modal.component.html',
   styleUrl: './edit-category-modal.component.css',
 })
+// TODO: open same modal on adding a new row, with default values and adds new document instead of overriding
 export class EditCategoryModalComponent {
   matDialogRef = inject(MatDialogRef<EditCategoryModalComponent>);
   category: Category = inject(MAT_DIALOG_DATA);
@@ -37,7 +41,9 @@ export class EditCategoryModalComponent {
 
   CategoryType = CategoryType;
   Variability = Variability;
+  amountMask = amountMask;
 
+  // TODO: add validators
   categoryForm = this.fb.group({
     actualAmount: [this.category.actualAmount.toString()],
     expectedAmount: [this.category.expectedAmount.toString()],
@@ -59,5 +65,6 @@ export class EditCategoryModalComponent {
         this.categoryForm.controls.expectedAmount.value,
       ),
     } as Category);
+    this.matDialogRef.close();
   }
 }

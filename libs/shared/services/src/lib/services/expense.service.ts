@@ -8,6 +8,8 @@ import {
   doc,
   query,
 } from '@angular/fire/firestore';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AmountPipe } from '@budgt/shared/components';
 import { Expense } from '@budgt/shared/types';
 import { Observable } from 'rxjs';
 
@@ -16,6 +18,9 @@ import { Observable } from 'rxjs';
 })
 export class ExpenseService {
   private firestore = inject(Firestore);
+  private snackbar = inject(MatSnackBar);
+
+  amountPipe = new AmountPipe();
 
   getExpenses(): Observable<Expense[]> {
     const expenses = query(
@@ -33,11 +38,33 @@ export class ExpenseService {
         ...expense,
       },
     );
+
+    this.snackbar.open(
+      'Added expense for ' + this.amountPipe.transform(expense.amount),
+      'Dismiss',
+      {
+        duration: 3000,
+      },
+    );
   }
 
-  removeExpense(id: string) {
+  removeExpense(expense: Expense) {
     deleteDoc(
-      doc(this.firestore, 'budget', 'fhkEtoq6d1eNN8hfTkLg', 'expenses', id),
+      doc(
+        this.firestore,
+        'budget',
+        'fhkEtoq6d1eNN8hfTkLg',
+        'expenses',
+        expense.id,
+      ),
+    );
+
+    this.snackbar.open(
+      'Removed expense for ' + this.amountPipe.transform(expense.amount),
+      'Dismiss',
+      {
+        duration: 3000,
+      },
     );
   }
 }

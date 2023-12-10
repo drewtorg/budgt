@@ -31,6 +31,7 @@ import { EditCategoryModalComponent } from '../edit-category-modal/edit-category
   templateUrl: './income-table.component.html',
   styleUrl: './income-table.component.css',
 })
+// TODO: can this become a category table?
 export class IncomeTableComponent implements OnChanges {
   @Input() income: Category[] | null = null;
   @ViewChild(MatSort) set sort(sort: MatSort | undefined) {

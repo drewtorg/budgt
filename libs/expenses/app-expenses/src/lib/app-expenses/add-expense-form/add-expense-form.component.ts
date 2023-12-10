@@ -69,13 +69,5 @@ export class AddExpenseFormComponent {
       category: '',
       date: new Date(),
     });
-
-    this.snackbar.open(
-      'Added expense for ' + this.amountPipe.transform(expense.amount),
-      'Dismiss',
-      {
-        duration: 3000,
-      },
-    );
   }
 }

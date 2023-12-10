@@ -9,6 +9,7 @@ import {
   setDoc,
   where,
 } from '@angular/fire/firestore';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Category } from '@budgt/shared/types';
 import { Observable } from 'rxjs';
 
@@ -17,6 +18,7 @@ import { Observable } from 'rxjs';
 })
 export class CategoryService {
   private firestore = inject(Firestore);
+  private snackbar = inject(MatSnackBar);
 
   getCategories(): Observable<Category[]> {
     const categories = query(
@@ -52,11 +54,25 @@ export class CategoryService {
       doc(this.firestore, 'budget', 'fhkEtoq6d1eNN8hfTkLg', 'categories', id),
       category,
     );
+
+    this.snackbar.open('Added category: ' + category.name, 'Dismiss', {
+      duration: 3000,
+    });
   }
 
-  removeCategory(id: string) {
+  removeCategory(category: Category) {
     deleteDoc(
-      doc(this.firestore, 'budget', 'fhkEtoq6d1eNN8hfTkLg', 'categories', id),
+      doc(
+        this.firestore,
+        'budget',
+        'fhkEtoq6d1eNN8hfTkLg',
+        'categories',
+        category.id,
+      ),
     );
+
+    this.snackbar.open('Removed category: ' + category.name, 'Dismiss', {
+      duration: 3000,
+    });
   }
 }

@@ -48,6 +48,7 @@
         <td mat-cell *matCellDef="let element">
           <div class="category-cell">
             <div>{{ element.category }}</div>
+            <!-- TODO: switch to edit modal -->
             <button mat-icon-button (click)="onRemove(element)">
               <mat-icon>delete_outline</mat-icon>
             </button>

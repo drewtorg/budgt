@@ -39,7 +39,6 @@ export class ExpenseTableComponent {
 
   dataSource = new MatTableDataSource();
   yearMonthDayPipe = new YearMonthDayPipe();
-  amountPipe = new AmountPipe();
 
   expenses$ = this.expenseService.getExpenses().pipe(
     tap(
@@ -54,14 +53,6 @@ export class ExpenseTableComponent {
   displayedColumns = ['date', 'amount', 'category'];
 
   onRemove(expense: Expense) {
-    this.expenseService.removeExpense(expense.id);
-
-    this.snackbar.open(
-      'Removed expense for ' + this.amountPipe.transform(expense.amount),
-      'Dismiss',
-      {
-        duration: 3000,
-      },
-    );
+    this.expenseService.removeExpense(expense);
   }
 }

@@ -8,12 +8,16 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Expected</mat-label>
-      <input matInput formControlName="expectedAmount" />
+      <input
+        matInput
+        formControlName="expectedAmount"
+        [inputMask]="amountMask"
+      />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Actual</mat-label>
-      <input matInput formControlName="actualAmount" />
+      <input matInput formControlName="actualAmount" [inputMask]="amountMask" />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -31,8 +35,10 @@
       </mat-form-field>
     }
   </form>
+  <!-- TODO: display all associated expenses when its an expense category -->
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onCancel()">Cancel</button>
+  <!-- TODO: add delete button and style appropriately -->
   <button mat-button (click)="onSave()">Save</button>
 </div>
