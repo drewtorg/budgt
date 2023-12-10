@@ -6,6 +6,7 @@ import {
   deleteDoc,
   doc,
   query,
+  setDoc,
   where,
 } from '@angular/fire/firestore';
 import { Category } from '@budgt/shared/types';
@@ -44,6 +45,13 @@ export class CategoryService {
     return collectionData(categories, {
       idField: 'id',
     }) as Observable<Category[]>;
+  }
+
+  updateCategory(id: string, category: Category) {
+    setDoc(
+      doc(this.firestore, 'budget', 'fhkEtoq6d1eNN8hfTkLg', 'categories', id),
+      category,
+    );
   }
 
   removeCategory(id: string) {

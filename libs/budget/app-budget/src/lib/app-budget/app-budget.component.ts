@@ -5,7 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { UiPageComponent } from '@budgt/shared/components';
 import { CategoryService, ExpenseService } from '@budgt/shared/services';
 import { CategoryType } from '@budgt/shared/types';
-import { map, tap } from 'rxjs';
+import { map } from 'rxjs';
 import { IncomeTableComponent } from './income-table/income-table.component';
 
 @Component({
@@ -28,7 +28,6 @@ export class AppBudgetComponent {
   expenses$ = this.expenseService.getExpenses();
   categories$ = this.categoryService.getCategories();
   incomeCategories$ = this.categories$.pipe(
-    tap((i) => console.log(i)),
     map((categories) =>
       categories.filter((c) => c.type === CategoryType.Income),
     ),

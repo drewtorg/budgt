@@ -8,6 +8,16 @@ export interface Category {
   variability: Variability;
 }
 
+export interface CategoryData {
+  id?: string;
+  actualAmount: number;
+  expectedAmount: number;
+  label: string;
+  name: string;
+  type: string;
+  variability: string;
+}
+
 export enum Label {
   Need = 'need',
   Want = 'want',

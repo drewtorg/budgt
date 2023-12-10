@@ -7,6 +7,7 @@ import {
   inject,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -14,6 +15,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { AmountPipe } from '@budgt/shared/components';
 import { CategoryService } from '@budgt/shared/services';
 import { Category, Variability } from '@budgt/shared/types';
+import { EditCategoryModalComponent } from '../edit-category-modal/edit-category-modal.component';
 
 @Component({
   selector: 'budgt-income-table',
@@ -38,6 +40,7 @@ export class IncomeTableComponent implements OnChanges {
   }
 
   categoryService = inject(CategoryService);
+  dialog = inject(MatDialog);
 
   dataSource = new MatTableDataSource();
   amountPipe = new AmountPipe();
@@ -52,7 +55,11 @@ export class IncomeTableComponent implements OnChanges {
     }
   }
 
-  onRemove(category: Category) {
-    this.categoryService.removeCategory(category.id);
+  onRowClick(category: Category) {
+    this.dialog.open(EditCategoryModalComponent, {
+      data: {
+        ...category,
+      },
+    });
   }
 }

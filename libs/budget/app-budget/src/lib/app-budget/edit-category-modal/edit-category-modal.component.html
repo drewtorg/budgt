@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>{{ category.name }}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="categoryForm" class="category-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Expected</mat-label>
+      <input matInput formControlName="expectedAmount" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Actual</mat-label>
+      <input matInput formControlName="actualAmount" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Variability</mat-label>
+      <mat-select formControlName="variability">
+        <mat-option [value]="Variability.Fixed">Fixed</mat-option>
+        <mat-option [value]="Variability.Variable">Variable</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    @if (category.type === CategoryType.Expense) {
+      <mat-form-field appearance="outline">
+        <mat-label>Label</mat-label>
+        <input matInput formControlName="label" />
+      </mat-form-field>
+    }
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onSave()">Save</button>
+</div>
