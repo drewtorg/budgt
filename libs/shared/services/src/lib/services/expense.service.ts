@@ -7,6 +7,7 @@ import {
   deleteDoc,
   doc,
   query,
+  where,
 } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AmountPipe } from '@budgt/shared/components';
@@ -25,6 +26,16 @@ export class ExpenseService {
   getExpenses(): Observable<Expense[]> {
     const expenses = query(
       collection(this.firestore, 'budget', 'fhkEtoq6d1eNN8hfTkLg', 'expenses'),
+    );
+    return collectionData(expenses, {
+      idField: 'id',
+    }) as Observable<Expense[]>;
+  }
+
+  getExpensesByCategory(category: string): Observable<Expense[]> {
+    const expenses = query(
+      collection(this.firestore, 'budget', 'fhkEtoq6d1eNN8hfTkLg', 'expenses'),
+      where('category', '==', category),
     );
     return collectionData(expenses, {
       idField: 'id',
