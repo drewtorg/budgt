@@ -2,6 +2,6 @@
   cursor: pointer;
 }
 
-/* .mat-mdc-row:hover .mat-mdc-cell {
-  border-color: currentColor;
-} */
+.mat-mdc-footer-row {
+  font-weight: 500;
+}

@@ -1,5 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import {
+  NonNullableFormBuilder,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
@@ -32,7 +36,6 @@ import { InputMaskModule } from '@ngneat/input-mask';
   templateUrl: './edit-category-modal.component.html',
   styleUrl: './edit-category-modal.component.css',
 })
-// TODO: open same modal on adding a new row, with default values and adds new document instead of overriding
 export class EditCategoryModalComponent {
   matDialogRef = inject(MatDialogRef<EditCategoryModalComponent>);
   category: Category = inject(MAT_DIALOG_DATA);
@@ -43,28 +46,41 @@ export class EditCategoryModalComponent {
   Variability = Variability;
   amountMask = amountMask;
 
-  // TODO: add validators
   categoryForm = this.fb.group({
-    actualAmount: [this.category.actualAmount.toString()],
-    expectedAmount: [this.category.expectedAmount.toString()],
-    label: [this.category.label],
-    name: [this.category.name],
-    type: [this.category.type],
-    variability: [this.category.variability],
+    actualAmount: [this.category.actualAmount, Validators.required],
+    expectedAmount: [this.category.expectedAmount, Validators.required],
+    label: [this.category.label, Validators.required],
+    name: [this.category.name, Validators.required],
+    type: [this.category.type, Validators.required],
+    variability: [this.category.variability, Validators.required],
   });
 
   onCancel() {
     this.matDialogRef.close();
   }
 
+  onDelete() {
+    this.categoryService.removeCategory(this.category);
+    this.matDialogRef.close();
+  }
+
   onSave() {
-    this.categoryService.updateCategory(this.category.id, {
+    if (!this.categoryForm.valid) {
+      return;
+    }
+
+    const c = {
       ...this.categoryForm.value,
-      actualAmount: parseFloat(this.categoryForm.controls.actualAmount.value),
-      expectedAmount: parseFloat(
-        this.categoryForm.controls.expectedAmount.value,
-      ),
-    } as Category);
+      actualAmount: this.categoryForm.controls.actualAmount.value,
+      expectedAmount: this.categoryForm.controls.expectedAmount.value,
+    } as Category;
+
+    if (this.category.id) {
+      this.categoryService.updateCategory(this.category.id, c);
+    } else {
+      this.categoryService.addCategory(c);
+    }
+
     this.matDialogRef.close();
   }
 }

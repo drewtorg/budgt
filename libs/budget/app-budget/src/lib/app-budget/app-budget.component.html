@@ -12,7 +12,9 @@
         ></budgt-income-table>
       </mat-card-content>
       <mat-card-footer>
-        <button mat-button color="primary">Add Row</button>
+        <div class="card-footer">
+          <button mat-button color="primary" (click)="onAdd()">Add Row</button>
+        </div>
       </mat-card-footer>
     </mat-card>
 

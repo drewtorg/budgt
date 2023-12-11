@@ -43,11 +43,23 @@ export class IncomeTableComponent implements OnChanges {
   categoryService = inject(CategoryService);
   dialog = inject(MatDialog);
 
-  dataSource = new MatTableDataSource();
+  dataSource = new MatTableDataSource<Category>();
   amountPipe = new AmountPipe();
   Variability = Variability;
 
   displayedColumns = ['name', 'expectedAmount', 'actualAmount', 'variability'];
+
+  get totalExpected() {
+    return this.dataSource.data
+      .map((c) => c.expectedAmount)
+      .reduce((acc, cur) => acc + cur, 0);
+  }
+
+  get totalActual() {
+    return this.dataSource.data
+      .map((c) => c.actualAmount)
+      .reduce((acc, cur) => acc + cur, 0);
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     const income = changes['income'].currentValue;
@@ -61,6 +73,7 @@ export class IncomeTableComponent implements OnChanges {
       data: {
         ...category,
       },
+      minWidth: '375px',
     });
   }
 }

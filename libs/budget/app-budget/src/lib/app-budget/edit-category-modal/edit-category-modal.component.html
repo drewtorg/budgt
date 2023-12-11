@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>{{ category.name }}</h1>
+<h1 mat-dialog-title>{{ category.name || 'New Category' }}</h1>
 <div mat-dialog-content>
   <form [formGroup]="categoryForm" class="category-form">
     <mat-form-field appearance="outline">
@@ -11,13 +11,19 @@
       <input
         matInput
         formControlName="expectedAmount"
+        inputmode="numeric"
         [inputMask]="amountMask"
       />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Actual</mat-label>
-      <input matInput formControlName="actualAmount" [inputMask]="amountMask" />
+      <input
+        matInput
+        formControlName="actualAmount"
+        inputmode="numeric"
+        [inputMask]="amountMask"
+      />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
@@ -37,8 +43,12 @@
   </form>
   <!-- TODO: display all associated expenses when its an expense category -->
 </div>
-<div mat-dialog-actions>
+<div mat-dialog-actions class="button-container">
   <button mat-button (click)="onCancel()">Cancel</button>
-  <!-- TODO: add delete button and style appropriately -->
-  <button mat-button (click)="onSave()">Save</button>
+  <div class="action-buttons">
+    @if (category.id) {
+      <button mat-button color="warn" (click)="onDelete()">Delete</button>
+    }
+    <button mat-flat-button color="primary" (click)="onSave()">Save</button>
+  </div>
 </div>

@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import {
   Firestore,
+  addDoc,
   collection,
   collectionData,
   deleteDoc,
@@ -49,13 +50,29 @@ export class CategoryService {
     }) as Observable<Category[]>;
   }
 
+  addCategory(category: Category) {
+    addDoc(
+      collection(
+        this.firestore,
+        'budget',
+        'fhkEtoq6d1eNN8hfTkLg',
+        'categories',
+      ),
+      category,
+    );
+
+    this.snackbar.open('Added category: ' + category.name, 'Dismiss', {
+      duration: 3000,
+    });
+  }
+
   updateCategory(id: string, category: Category) {
     setDoc(
       doc(this.firestore, 'budget', 'fhkEtoq6d1eNN8hfTkLg', 'categories', id),
       category,
     );
 
-    this.snackbar.open('Added category: ' + category.name, 'Dismiss', {
+    this.snackbar.open('Updated category: ' + category.name, 'Dismiss', {
       duration: 3000,
     });
   }
