@@ -1,5 +1,5 @@
-@if (income != null) {
-  @if (income.length) {
+@if (categories != null) {
+  @if (categories.length) {
     <table
       mat-table
       [dataSource]="dataSource"
@@ -84,7 +84,7 @@
       ></tr>
     </table>
   } @else {
-    <p class="no-expenses">No income for this month</p>
+    <p class="no-expenses">No categories in this section</p>
   }
 } @else {
   <div class="spinner-container">

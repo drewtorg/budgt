@@ -1,0 +1,16 @@
+.mat-mdc-row .mat-mdc-cell {
+  cursor: pointer;
+}
+
+.mat-mdc-footer-row {
+  font-weight: 500;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+}
+
+.spinner {
+  margin: 16px 0 16px 0;
+}

@@ -7,5 +7,6 @@ export const amountMask = createMask({
   digitsOptional: true,
   radixPoint: ',',
   suffix: ' SEK',
-  parser: (value: string) => parseFloat(value.match(/\d+/g)?.join('.') ?? ''),
+  parser: (value: string) =>
+    parseFloat(value.replace(/SEK| /g, '').split(',').join('.')),
 });

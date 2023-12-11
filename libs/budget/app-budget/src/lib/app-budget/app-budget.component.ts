@@ -5,10 +5,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import { UiPageComponent } from '@budgt/shared/components';
 import { CategoryService, ExpenseService } from '@budgt/shared/services';
-import { CategoryType } from '@budgt/shared/types';
+import { CategoryType, Label } from '@budgt/shared/types';
 import { map } from 'rxjs';
+import { CategoryTableComponent } from './category-table/category-table.component';
 import { EditCategoryModalComponent } from './edit-category-modal/edit-category-modal.component';
-import { IncomeTableComponent } from './income-table/income-table.component';
 
 @Component({
   selector: 'budgt-app-budget',
@@ -18,7 +18,7 @@ import { IncomeTableComponent } from './income-table/income-table.component';
     MatCardModule,
     MatButtonModule,
     UiPageComponent,
-    IncomeTableComponent,
+    CategoryTableComponent,
   ],
   templateUrl: './app-budget.component.html',
   styleUrl: './app-budget.component.css',
@@ -27,6 +27,8 @@ export class AppBudgetComponent {
   expenseService = inject(ExpenseService);
   categoryService = inject(CategoryService);
   dialog = inject(MatDialog);
+
+  CategoryType = CategoryType;
 
   expenses$ = this.expenseService.getExpenses();
   categories$ = this.categoryService.getCategories();
@@ -40,11 +42,20 @@ export class AppBudgetComponent {
       categories.filter((c) => c.type === CategoryType.Expense),
     ),
   );
+  needsExpenses$ = this.expenseCategories$.pipe(
+    map((categories) => categories.filter((c) => c.label === Label.Need)),
+  );
+  wantsExpenses$ = this.expenseCategories$.pipe(
+    map((categories) => categories.filter((c) => c.label === Label.Want)),
+  );
+  dreamsExpenses$ = this.expenseCategories$.pipe(
+    map((categories) => categories.filter((c) => c.label === Label.Dreams)),
+  );
 
-  onAdd() {
+  onAdd(type: CategoryType) {
     this.dialog.open(EditCategoryModalComponent, {
       data: {
-        type: CategoryType.Income,
+        type,
       },
       minWidth: '375px',
     });

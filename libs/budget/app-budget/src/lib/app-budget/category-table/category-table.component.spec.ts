@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IncomeTableComponent } from './income-table.component';
+import { IncomeTableComponent } from './category-table.component';
 
 describe('IncomeTableComponent', () => {
   let component: IncomeTableComponent;

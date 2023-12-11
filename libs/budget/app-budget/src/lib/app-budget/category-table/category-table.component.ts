@@ -18,7 +18,7 @@ import { Category, Variability } from '@budgt/shared/types';
 import { EditCategoryModalComponent } from '../edit-category-modal/edit-category-modal.component';
 
 @Component({
-  selector: 'budgt-income-table',
+  selector: 'budgt-category-table',
   standalone: true,
   imports: [
     MatTableModule,
@@ -28,12 +28,11 @@ import { EditCategoryModalComponent } from '../edit-category-modal/edit-category
     MatButtonModule,
     AmountPipe,
   ],
-  templateUrl: './income-table.component.html',
-  styleUrl: './income-table.component.css',
+  templateUrl: './category-table.component.html',
+  styleUrl: './category-table.component.css',
 })
-// TODO: can this become a category table?
-export class IncomeTableComponent implements OnChanges {
-  @Input() income: Category[] | null = null;
+export class CategoryTableComponent implements OnChanges {
+  @Input() categories: Category[] | null = null;
   @ViewChild(MatSort) set sort(sort: MatSort | undefined) {
     if (sort) {
       this.dataSource.sort = sort;
@@ -62,9 +61,9 @@ export class IncomeTableComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const income = changes['income'].currentValue;
-    if (income) {
-      this.dataSource.data = income;
+    const categories = changes['categories'].currentValue;
+    if (categories) {
+      this.dataSource.data = categories;
     }
   }
 

@@ -7,13 +7,19 @@
         <mat-card-title> Income </mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <budgt-income-table
-          [income]="incomeCategories$ | async"
-        ></budgt-income-table>
+        <budgt-category-table
+          [categories]="incomeCategories$ | async"
+        ></budgt-category-table>
       </mat-card-content>
       <mat-card-footer>
         <div class="card-footer">
-          <button mat-button color="primary" (click)="onAdd()">Add Row</button>
+          <button
+            mat-button
+            color="primary"
+            (click)="onAdd(CategoryType.Income)"
+          >
+            Add Row
+          </button>
         </div>
       </mat-card-footer>
     </mat-card>
@@ -24,21 +30,40 @@
       </mat-card-header>
       <mat-card-content>
         <h4>Needs</h4>
+        <budgt-category-table
+          [categories]="needsExpenses$ | async"
+        ></budgt-category-table>
         <h4>Dreams</h4>
+        <budgt-category-table
+          [categories]="dreamsExpenses$ | async"
+        ></budgt-category-table>
         <h4>Wants</h4>
+        <budgt-category-table
+          [categories]="wantsExpenses$ | async"
+        ></budgt-category-table>
       </mat-card-content>
       <mat-card-footer>
-        <button mat-button color="primary">Add Row</button>
+        <div class="card-footer">
+          <button
+            mat-button
+            color="primary"
+            (click)="onAdd(CategoryType.Expense)"
+          >
+            Add Row
+          </button>
+        </div>
       </mat-card-footer>
     </mat-card>
 
     <mat-card>
       <mat-card-header>
-        <mat-card-title> Current Saving Buckets </mat-card-title>
+        <mat-card-title> Revolving Expense Buckets </mat-card-title>
       </mat-card-header>
-      <mat-card-content> </mat-card-content>
+      <mat-card-content> <p>No buckets defined</p></mat-card-content>
       <mat-card-footer>
-        <button mat-button color="primary">Add Bucket</button>
+        <div class="card-footer">
+          <button mat-button color="primary">Add Bucket</button>
+        </div>
       </mat-card-footer>
     </mat-card>
   </div>

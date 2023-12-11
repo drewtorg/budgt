@@ -37,7 +37,11 @@
     @if (category.type === CategoryType.Expense) {
       <mat-form-field appearance="outline">
         <mat-label>Label</mat-label>
-        <input matInput formControlName="label" />
+        <mat-select formControlName="label">
+          <mat-option [value]="Label.Need">Needs</mat-option>
+          <mat-option [value]="Label.Dreams">Dreams</mat-option>
+          <mat-option [value]="Label.Want">Wants</mat-option>
+        </mat-select>
       </mat-form-field>
     }
   </form>

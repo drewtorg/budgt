@@ -17,7 +17,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { amountMask } from '@budgt/shared/components';
 import { CategoryService } from '@budgt/shared/services';
-import { Category, CategoryType, Variability } from '@budgt/shared/types';
+import {
+  Category,
+  CategoryType,
+  Label,
+  Variability,
+} from '@budgt/shared/types';
 import { InputMaskModule } from '@ngneat/input-mask';
 @Component({
   selector: 'budgt-edit-category-modal',
@@ -44,6 +49,7 @@ export class EditCategoryModalComponent {
 
   CategoryType = CategoryType;
   Variability = Variability;
+  Label = Label;
   amountMask = amountMask;
 
   categoryForm = this.fb.group({
