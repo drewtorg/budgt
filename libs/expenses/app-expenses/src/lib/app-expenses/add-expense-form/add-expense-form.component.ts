@@ -6,7 +6,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatNativeDateModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -27,7 +26,6 @@ import { InputMaskModule } from '@ngneat/input-mask';
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
-    MatNativeDateModule,
     MatSelectModule,
     MatButtonModule,
     InputMaskModule,
@@ -55,6 +53,8 @@ export class AddExpenseFormComponent {
     if (!this.expenseForm.valid) {
       return;
     }
+
+    console.log(this.expenseForm.controls.date.value);
 
     const expense = {
       date: dateToString(this.expenseForm.controls.date.value),

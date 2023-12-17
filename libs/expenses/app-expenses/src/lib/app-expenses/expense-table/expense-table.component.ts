@@ -1,6 +1,7 @@
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { Component, ViewChild, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -10,6 +11,7 @@ import { AmountPipe, YearMonthDayPipe } from '@budgt/shared/components';
 import { ExpenseService } from '@budgt/shared/services';
 import { Expense } from '@budgt/shared/types';
 import { tap } from 'rxjs';
+import { EditExpenseModalComponent } from '../edit-expense-modal/edit-expense-modal.component';
 
 @Component({
   selector: 'budgt-expense-table',
@@ -36,6 +38,7 @@ export class ExpenseTableComponent {
 
   expenseService = inject(ExpenseService);
   snackbar = inject(MatSnackBar);
+  matDialog = inject(MatDialog);
 
   dataSource = new MatTableDataSource();
   yearMonthDayPipe = new YearMonthDayPipe();
@@ -54,5 +57,12 @@ export class ExpenseTableComponent {
 
   onRemove(expense: Expense) {
     this.expenseService.removeExpense(expense);
+  }
+
+  onRowClick(expense: Expense) {
+    this.matDialog.open(EditExpenseModalComponent, {
+      data: expense,
+      minWidth: '375px',
+    });
   }
 }

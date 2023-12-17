@@ -7,6 +7,7 @@ import {
   deleteDoc,
   doc,
   query,
+  setDoc,
   where,
 } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -52,6 +53,21 @@ export class ExpenseService {
 
     this.snackbar.open(
       'Added expense for ' + this.amountPipe.transform(expense.amount),
+      'Dismiss',
+      {
+        duration: 3000,
+      },
+    );
+  }
+
+  updateExpense(id: string, expense: Expense) {
+    setDoc(
+      doc(this.firestore, 'budget', 'fhkEtoq6d1eNN8hfTkLg', 'expenses', id),
+      expense,
+    );
+
+    this.snackbar.open(
+      'Updated expense for: ' + this.amountPipe.transform(expense.amount),
       'Dismiss',
       {
         duration: 3000,

@@ -1,11 +1,9 @@
-.category-cell {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.mat-mdc-row .mat-mdc-cell {
+  cursor: pointer;
 }
 
-.category-cell button {
-  margin-left: 8px;
+.mat-mdc-row:hover {
+  background-color: #eaeff4;
 }
 
 .expense-table {

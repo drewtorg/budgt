@@ -1,6 +1,6 @@
 import { createMask } from '@ngneat/input-mask';
 
-export const amountMask = createMask({
+export const amountMask = createMask<number>({
   alias: 'numeric',
   groupSeparator: ' ',
   digits: 2,
