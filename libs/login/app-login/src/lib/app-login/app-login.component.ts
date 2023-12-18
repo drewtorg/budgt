@@ -1,11 +1,36 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import {
+  Auth,
+  GoogleAuthProvider,
+  browserLocalPersistence,
+  setPersistence,
+  signInWithRedirect,
+  signOut,
+} from '@angular/fire/auth';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'budgt-app-login',
   standalone: true,
-  imports: [CommonModule],
+  imports: [MatButtonModule],
   templateUrl: './app-login.component.html',
   styleUrl: './app-login.component.css',
 })
-export class AppLoginComponent {}
+export class AppLoginComponent {
+  auth = inject(Auth);
+
+  onLogin() {
+    const provider = new GoogleAuthProvider();
+    this.auth.useDeviceLanguage();
+
+    setPersistence(this.auth, browserLocalPersistence).then(() =>
+      signInWithRedirect(this.auth, provider),
+    );
+  }
+
+  onLogout() {
+    signOut(this.auth).then(() => {
+      console.log('signed out');
+    });
+  }
+}

@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@budgt/app-auth-handler": ["libs/login/app-auth-handler/src/index.ts"],
       "@budgt/app-budget": ["libs/budget/app-budget/src/index.ts"],
       "@budgt/app-expenses": ["libs/expenses/app-expenses/src/index.ts"],
       "@budgt/app-login": ["libs/login/app-login/src/index.ts"],

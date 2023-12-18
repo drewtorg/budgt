@@ -7,6 +7,11 @@ export const appRoutes: Route[] = [
       import('@budgt/app-login').then((c) => c.AppLoginComponent),
   },
   {
+    path: '__/auth/handler',
+    loadComponent: () =>
+      import('@budgt/app-auth-handler').then((c) => c.AppAuthHandlerComponent),
+  },
+  {
     path: 'budget',
     loadComponent: () =>
       import('@budgt/app-budget').then((c) => c.AppBudgetComponent),
