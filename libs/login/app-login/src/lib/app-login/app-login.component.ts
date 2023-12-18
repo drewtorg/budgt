@@ -2,8 +2,6 @@ import { Component, inject } from '@angular/core';
 import {
   Auth,
   GoogleAuthProvider,
-  browserLocalPersistence,
-  setPersistence,
   signInWithRedirect,
   signOut,
 } from '@angular/fire/auth';
@@ -23,9 +21,7 @@ export class AppLoginComponent {
     const provider = new GoogleAuthProvider();
     this.auth.useDeviceLanguage();
 
-    setPersistence(this.auth, browserLocalPersistence).then(() =>
-      signInWithRedirect(this.auth, provider),
-    );
+    signInWithRedirect(this.auth, provider);
   }
 
   onLogout() {
