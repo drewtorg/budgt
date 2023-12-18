@@ -5,12 +5,7 @@ export const appRoutes: Route[] = [
     path: '',
     loadComponent: () =>
       import('@budgt/app-login').then((c) => c.AppLoginComponent),
-  },
-  {
-    path: '__/auth/handler',
-    loadComponent: () =>
-      import('@budgt/app-auth-handler').then((c) => c.AppAuthHandlerComponent),
-  },
+  }, // TODO: add guard for all routes that requires logging in AND selecting a workspace
   {
     path: 'budget',
     loadComponent: () =>

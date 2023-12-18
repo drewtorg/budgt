@@ -1,32 +1,35 @@
+import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import {
-  Auth,
-  GoogleAuthProvider,
-  signInWithRedirect,
-  signOut,
-} from '@angular/fire/auth';
 import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
+import { AuthService } from '@budgt/shared/services';
+import { filter, take, tap } from 'rxjs';
 
 @Component({
   selector: 'budgt-app-login',
   standalone: true,
-  imports: [MatButtonModule],
+  imports: [MatButtonModule, AsyncPipe],
   templateUrl: './app-login.component.html',
   styleUrl: './app-login.component.css',
 })
 export class AppLoginComponent {
-  auth = inject(Auth);
+  authService = inject(AuthService);
+  router = inject(Router);
 
-  onLogin() {
-    const provider = new GoogleAuthProvider();
-    this.auth.useDeviceLanguage();
+  isLoggedIn$ = this.authService.isLoggedIn$;
 
-    signInWithRedirect(this.auth, provider);
+  constructor() {
+    // TODO: check this won't interfere with auth service sign in redirect
+    this.isLoggedIn$
+      .pipe(
+        take(1),
+        filter((loggedIn) => loggedIn),
+        tap(() => this.router.navigate(['expenses'])),
+      )
+      .subscribe();
   }
 
-  onLogout() {
-    signOut(this.auth).then(() => {
-      console.log('signed out');
-    });
+  async onLogin() {
+    await this.authService.signIn();
   }
 }

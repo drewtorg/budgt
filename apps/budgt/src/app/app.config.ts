@@ -15,7 +15,7 @@ export const appConfig: ApplicationConfig = {
       provideFirebaseApp(() =>
         initializeApp({
           apiKey: 'AIzaSyCCvQZ3FZ6AIb2olIUuVf9wbxvuUOZgU6g',
-          authDomain: 'budgt.vercel.app',
+          authDomain: 'budgt-3ecb0.firebaseapp.com',
           databaseURL: 'https://budgt-3ecb0.firebaseio.com',
           projectId: 'budgt-3ecb0',
         }),
