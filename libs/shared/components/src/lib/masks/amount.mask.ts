@@ -1,7 +1,7 @@
 import { createMask } from '@ngneat/input-mask';
 
 export const amountMask = createMask<number>({
-  alias: 'numeric',
+  alias: 'currency',
   groupSeparator: ' ',
   digits: 2,
   digitsOptional: true,

@@ -16,7 +16,7 @@
           <button
             mat-button
             color="primary"
-            (click)="onAdd(CategoryType.Income)"
+            (click)="onAddCategory(CategoryType.Income)"
           >
             Add Row
           </button>
@@ -47,7 +47,7 @@
           <button
             mat-button
             color="primary"
-            (click)="onAdd(CategoryType.Expense)"
+            (click)="onAddCategory(CategoryType.Expense)"
           >
             Add Row
           </button>
@@ -59,10 +59,14 @@
       <mat-card-header>
         <mat-card-title> Revolving Expense Buckets </mat-card-title>
       </mat-card-header>
-      <mat-card-content> <p>No buckets defined</p></mat-card-content>
+      <mat-card-content>
+        <budgt-bucket-table [buckets]="buckets$ | async"></budgt-bucket-table>
+      </mat-card-content>
       <mat-card-footer>
         <div class="card-footer">
-          <button mat-button color="primary">Add Bucket</button>
+          <button mat-button color="primary" (click)="onAddBucket()">
+            Add Bucket
+          </button>
         </div>
       </mat-card-footer>
     </mat-card>

@@ -1,0 +1,35 @@
+<h1 mat-dialog-title>{{ bucket.category || 'New Bucket' }}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="bucketForm" class="bucket-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Category</mat-label>
+      <mat-select formControlName="category">
+        @for (category of categories$ | async; track category.id) {
+          <mat-option [value]="category.name">{{ category.name }}</mat-option>
+        }
+      </mat-select>
+      @if (bucketForm.controls.category.invalid) {
+        <mat-error>You must select a value</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Current Amount</mat-label>
+      <input
+        matInput
+        formControlName="amount"
+        inputmode="decimal"
+        [inputMask]="amountMask"
+      />
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions class="button-container">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <div class="action-buttons">
+    @if (bucket.id) {
+      <button mat-button color="warn" (click)="onDelete()">Delete</button>
+    }
+    <button mat-flat-button color="primary" (click)="onSave()">Save</button>
+  </div>
+</div>

@@ -1,12 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import {
-  Firestore,
-  collection,
-  collectionData,
-  doc,
-  docData,
-} from '@angular/fire/firestore';
-import { Bucket, Workspace } from '@budgt/shared/types';
+import { Firestore, doc, docData } from '@angular/fire/firestore';
+import { Workspace } from '@budgt/shared/types';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -20,14 +14,5 @@ export class WorkspaceService {
     return docData(workspace, {
       idField: 'id',
     }) as Observable<Workspace>;
-  }
-
-  getBuckets(id: string): Observable<Bucket[]> {
-    return collectionData(
-      collection(this.firestore, 'workspace', id, 'buckets'),
-      {
-        idField: 'id',
-      },
-    ) as Observable<Bucket[]>;
   }
 }

@@ -54,8 +54,6 @@ export class AddExpenseFormComponent {
       return;
     }
 
-    console.log(this.expenseForm.controls.date.value);
-
     const expense = {
       date: dateToString(this.expenseForm.controls.date.value),
       amount: this.expenseForm.controls.amount.value,
