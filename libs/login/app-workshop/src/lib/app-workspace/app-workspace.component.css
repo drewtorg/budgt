@@ -1,0 +1,20 @@
+.workspace-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.workspace-form mat-form-field {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+@media (min-width: 768px) {
+  .workspace-form {
+    flex-direction: row;
+    align-items: baseline;
+  }
+
+  .workspace-form mat-form-field {
+    margin-right: 16px;
+  }
+}

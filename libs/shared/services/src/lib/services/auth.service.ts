@@ -6,6 +6,7 @@ import {
   signOut,
   user,
 } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 import { map } from 'rxjs';
 
 @Injectable({
@@ -13,6 +14,7 @@ import { map } from 'rxjs';
 })
 export class AuthService {
   private auth = inject(Auth);
+  private router = inject(Router);
 
   user$ = user(this.auth);
   isLoggedIn$ = this.user$.pipe(map((user) => !!user));
@@ -22,7 +24,8 @@ export class AuthService {
     this.auth.useDeviceLanguage();
 
     await signInWithPopup(this.auth, provider);
-    // TODO: on success send user to a page where they can select a workspace and logout
+
+    this.router.navigate(['workspace']);
   }
 
   async signOut() {

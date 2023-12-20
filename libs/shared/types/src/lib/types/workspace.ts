@@ -6,4 +6,6 @@ export interface Workspace {
     [key in string]: string;
   };
   buckets: Bucket[];
+  name: string;
+  password: string;
 }
