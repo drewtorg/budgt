@@ -39,7 +39,7 @@ export class AppBudgetComponent {
   CategoryType = CategoryType;
 
   expenses$ = this.expenseService.getExpenses();
-  buckets$ = this.bucketService.getBuckets('REWRjQEfLbmLu2OJNCpi');
+  buckets$ = this.bucketService.getBuckets();
   categories$ = this.categoryService.getCategories();
   incomeCategories$ = this.categories$.pipe(
     map((categories) =>
@@ -73,7 +73,6 @@ export class AppBudgetComponent {
   onAddBucket() {
     this.dialog.open(EditBucketModalComponent, {
       data: {
-        workspaceId: 'REWRjQEfLbmLu2OJNCpi',
         bucket: {},
       },
       minWidth: '375px',

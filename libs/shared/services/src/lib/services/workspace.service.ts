@@ -11,7 +11,7 @@ import {
 } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { Workspace } from '@budgt/shared/types';
-import { Observable, filter, take, tap } from 'rxjs';
+import { Observable, filter, map, take, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -22,19 +22,33 @@ export class WorkspaceService {
 
   private WORKSPACE_ID_KEY = 'budgt-workspace';
 
-  setStoredWorkspace(id: string) {
+  currentWorkspace?: Workspace;
+
+  constructor() {
+    this.initializeWorkspace();
+  }
+
+  setWorkspaceId(id: string) {
     localStorage.setItem(this.WORKSPACE_ID_KEY, id);
   }
 
-  getStoredWorkspace(): string | null {
-    return localStorage.getItem(this.WORKSPACE_ID_KEY);
+  getWorkspaceId(): string {
+    return localStorage.getItem(this.WORKSPACE_ID_KEY) ?? '';
   }
 
-  getWorkspace(id: string): Observable<Workspace> {
-    const workspace = doc(this.firestore, 'workspace', id);
-    return docData(workspace, {
-      idField: 'id',
-    }) as Observable<Workspace>;
+  initializeWorkspace() {
+    const id = this.getWorkspaceId();
+
+    if (id !== '') {
+      docData(doc(this.firestore, 'workspace', id), {
+        idField: 'id',
+      })
+        .pipe(
+          take(1),
+          tap((w) => (this.currentWorkspace = w as Workspace)),
+        )
+        .subscribe();
+    }
   }
 
   signInToWorkspace(name: string, password: string) {
@@ -51,7 +65,9 @@ export class WorkspaceService {
       .pipe(
         take(1),
         filter((w) => w.length > 0),
-        tap((w) => this.setStoredWorkspace(w[0].id)),
+        map((w) => w[0]),
+        tap((w) => this.setWorkspaceId(w.id)),
+        tap((w) => (this.currentWorkspace = w)),
         tap(() => this.router.navigate(['budget'])),
       )
       .subscribe();

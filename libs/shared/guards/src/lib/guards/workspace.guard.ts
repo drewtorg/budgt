@@ -6,8 +6,8 @@ export const workspaceGuard: CanActivateFn = () => {
   const workspaceService = inject(WorkspaceService);
   const router = inject(Router);
 
-  const id = workspaceService.getStoredWorkspace();
-  if (id) {
+  const id = workspaceService.getWorkspaceId();
+  if (id !== '') {
     return true;
   }
 

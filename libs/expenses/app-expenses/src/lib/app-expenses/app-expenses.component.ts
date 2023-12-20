@@ -41,6 +41,7 @@ export class AppExpensesComponent implements OnInit {
     this.normalizeQueryParams();
   }
 
+  // TODO: extract to reusable function
   normalizeQueryParams() {
     this.month = this.month
       ? parseInt(this.month as unknown as string)
@@ -50,6 +51,7 @@ export class AppExpensesComponent implements OnInit {
       : new Date().getFullYear();
   }
 
+  // TODO: extract month changer component
   onChangeMonth(increment: boolean) {
     this.normalizeQueryParams();
 

@@ -10,39 +10,63 @@ import {
 } from '@angular/fire/firestore';
 import { Bucket } from '@budgt/shared/types';
 import { Observable } from 'rxjs';
+import { WorkspaceService } from './workspace.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BucketService {
   private firestore = inject(Firestore);
+  private workspaceService = inject(WorkspaceService);
 
-  getBuckets(workspaceId: string): Observable<Bucket[]> {
+  getBuckets(): Observable<Bucket[]> {
     return collectionData(
-      collection(this.firestore, 'workspaces', workspaceId, 'buckets'),
+      collection(
+        this.firestore,
+        'workspaces',
+        this.workspaceService.getWorkspaceId(),
+        'buckets',
+      ),
       {
         idField: 'id',
       },
     ) as Observable<Bucket[]>;
   }
 
-  addBucket(workspaceId: string, bucket: Bucket) {
+  addBucket(bucket: Bucket) {
     addDoc(
-      collection(this.firestore, 'workspaces', workspaceId, 'buckets'),
+      collection(
+        this.firestore,
+        'workspaces',
+        this.workspaceService.getWorkspaceId(),
+        'buckets',
+      ),
       bucket,
     );
   }
 
-  updateBucket(workspaceId: string, bucketId: string, bucket: Bucket) {
+  updateBucket(bucketId: string, bucket: Bucket) {
     setDoc(
-      doc(this.firestore, 'workspaces', workspaceId, 'buckets', bucketId),
+      doc(
+        this.firestore,
+        'workspaces',
+        this.workspaceService.getWorkspaceId(),
+        'buckets',
+        bucketId,
+      ),
       bucket,
     );
   }
 
-  deleteBucket(workspaceId: string, bucket: Bucket) {
+  deleteBucket(bucket: Bucket) {
     deleteDoc(
-      doc(this.firestore, 'workspaces', workspaceId, 'buckets', bucket.id),
+      doc(
+        this.firestore,
+        'workspaces',
+        this.workspaceService.getWorkspaceId(),
+        'buckets',
+        bucket.id,
+      ),
     );
   }
 }

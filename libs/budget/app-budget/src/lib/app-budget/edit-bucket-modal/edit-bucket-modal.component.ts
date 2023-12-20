@@ -65,7 +65,6 @@ export class EditBucketModalComponent {
   dataSource = new MatTableDataSource<Bucket>();
 
   bucket = this.data.bucket;
-  workspaceId = this.data.workspaceId;
   bucketForm = this.fb.group({
     category: [this.bucket.category, Validators.required],
     amount: [this.bucket.amount, Validators.required],
@@ -80,7 +79,7 @@ export class EditBucketModalComponent {
   }
 
   onDelete() {
-    this.bucketService.deleteBucket(this.workspaceId, this.bucket);
+    this.bucketService.deleteBucket(this.bucket);
     this.matDialogRef.close();
   }
 
@@ -92,9 +91,9 @@ export class EditBucketModalComponent {
     const bucket = this.bucketForm.value as Bucket;
 
     if (this.bucket.id) {
-      this.bucketService.updateBucket(this.workspaceId, this.bucket.id, bucket);
+      this.bucketService.updateBucket(this.bucket.id, bucket);
     } else {
-      this.bucketService.addBucket(this.workspaceId, bucket);
+      this.bucketService.addBucket(bucket);
     }
 
     this.matDialogRef.close();

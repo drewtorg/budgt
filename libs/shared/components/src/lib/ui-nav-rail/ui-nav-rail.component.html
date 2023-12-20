@@ -2,7 +2,8 @@
   <a
     *ngFor="let route of routes"
     [routerLink]="route.href"
-    [ngClass]="{ active: route.active }"
+    routerLinkActive="active"
+    queryParamsHandling="merge"
   >
     <div class="icon">
       <mat-icon [fontIcon]="route.icon"></mat-icon>
