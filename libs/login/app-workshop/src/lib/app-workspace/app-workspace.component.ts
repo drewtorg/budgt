@@ -36,7 +36,6 @@ export class AppWorkspaceComponent {
   });
 
   onSubmit() {
-    console.log(this.workspaceForm.value);
     if (!this.workspaceForm.valid) {
       return;
     }

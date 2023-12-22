@@ -3,9 +3,10 @@ import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
-import { UiPageComponent } from '@budgt/shared/components';
+import { MonthYearPipe, UiPageComponent } from '@budgt/shared/components';
 import {
   BucketService,
+  BudgetService,
   CategoryService,
   ExpenseService,
 } from '@budgt/shared/services';
@@ -26,6 +27,7 @@ import { EditCategoryModalComponent } from './edit-category-modal/edit-category-
     UiPageComponent,
     CategoryTableComponent,
     BucketTableComponent,
+    MonthYearPipe,
   ],
   templateUrl: './app-budget.component.html',
   styleUrl: './app-budget.component.css',
@@ -33,6 +35,7 @@ import { EditCategoryModalComponent } from './edit-category-modal/edit-category-
 export class AppBudgetComponent {
   expenseService = inject(ExpenseService);
   bucketService = inject(BucketService);
+  budgetService = inject(BudgetService);
   categoryService = inject(CategoryService);
   dialog = inject(MatDialog);
 

@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, computed, effect, inject, signal } from '@angular/core';
 import {
   Firestore,
   addDoc,
@@ -6,17 +6,71 @@ import {
   doc,
   docData,
 } from '@angular/fire/firestore';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Budget } from '@budgt/shared/types';
-import { Observable } from 'rxjs';
+import { Observable, ReplaySubject, combineLatest, of, take, tap } from 'rxjs';
+import { WorkspaceService } from './workspace.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BudgetService {
   private firestore = inject(Firestore);
-  // TODO: listen for route updates and handle setting current month and year
-  //       set the current budget based on the month and year
-  //       if budget doesn't exist on that date, create a budget based on the current months budget(?)
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private workspaceService = inject(WorkspaceService);
+
+  currentBudget = signal<Budget>({
+    id: '',
+    date: '',
+  });
+  currentMonth = signal(new Date().getMonth() + 1);
+  currentYear = signal(new Date().getFullYear());
+
+  hasCurrentBudget = computed(() => !!this.currentBudget().id);
+  currentBudgetDate = computed(
+    () => new Date(`${this.currentYear()}-${this.currentMonth()}-01`),
+  );
+
+  changeBudgetMonth$ = new ReplaySubject<void>();
+  loadBudget$ = combineLatest([this.changeBudgetMonth$]);
+
+  constructor() {
+    effect(
+      () => {
+        this.getBudgetByDate(this.currentMonth(), this.currentYear())
+          .pipe(
+            take(1),
+            tap((budget) =>
+              this.currentBudget.set(
+                budget ? { ...budget } : { id: '', date: '' },
+              ),
+            ),
+            tap(() => this.changeBudgetMonth$.next()),
+          )
+          .subscribe();
+      },
+      {
+        allowSignalWrites: true,
+      },
+    );
+
+    this.route.queryParams
+      .pipe(
+        tap((params) => {
+          const month = params['month']
+            ? parseInt(params['month'])
+            : new Date().getMonth() + 1;
+          const year = params['year']
+            ? parseInt(params['year'])
+            : new Date().getFullYear();
+
+          this.currentMonth.set(month);
+          this.currentYear.set(year);
+        }),
+      )
+      .subscribe();
+  }
 
   getBudget(id: string): Observable<Budget> {
     return docData(doc(this.firestore, 'budget', id), {
@@ -24,7 +78,36 @@ export class BudgetService {
     }) as Observable<Budget>;
   }
 
+  getBudgetByDate(month: number, year: number): Observable<Budget | undefined> {
+    const id =
+      this.workspaceService.currentWorkspace()?.budgets[
+        year.toString() + '-' + month.toString()
+      ];
+    return id ? this.getBudget(id) : of(undefined);
+  }
+
   async addBudget(budget: Budget) {
     return await addDoc(collection(this.firestore, 'budget'), budget);
+  }
+
+  changeBudgetMonth(increment: boolean) {
+    let month = this.currentMonth();
+    let year = this.currentYear();
+    if (increment && month === 12) {
+      month = 1;
+      year++;
+    } else if (!increment && month === 1) {
+      month = 12;
+      year--;
+    } else {
+      month += increment ? 1 : -1;
+    }
+
+    this.router.navigate([], {
+      queryParams: {
+        month,
+        year,
+      },
+    });
   }
 }
