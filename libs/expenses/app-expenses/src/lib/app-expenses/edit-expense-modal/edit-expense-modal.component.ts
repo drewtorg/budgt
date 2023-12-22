@@ -18,10 +18,10 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { amountMask } from '@budgt/shared/components';
 import { dateToString } from '@budgt/shared/functions';
 import { CategoryService, ExpenseService } from '@budgt/shared/services';
 import { Expense } from '@budgt/shared/types';
+import { amountMask } from '@budgt/shared/util';
 import { InputMaskModule } from '@ngneat/input-mask';
 
 @Component({

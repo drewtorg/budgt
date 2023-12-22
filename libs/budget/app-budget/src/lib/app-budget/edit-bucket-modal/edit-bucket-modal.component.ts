@@ -18,9 +18,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { AmountPipe, amountMask } from '@budgt/shared/components';
 import { BucketService, CategoryService } from '@budgt/shared/services';
 import { Bucket } from '@budgt/shared/types';
+import { AmountPipe, amountMask } from '@budgt/shared/util';
 import { InputMaskModule } from '@ngneat/input-mask';
 @Component({
   selector: 'budgt-edit-bucket-modal',

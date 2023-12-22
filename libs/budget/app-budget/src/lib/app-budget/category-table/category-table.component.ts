@@ -12,9 +12,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { AmountPipe } from '@budgt/shared/components';
 import { CategoryService } from '@budgt/shared/services';
 import { Category, Variability } from '@budgt/shared/types';
+import { AmountPipe } from '@budgt/shared/util';
 import { EditCategoryModalComponent } from '../edit-category-modal/edit-category-modal.component';
 
 @Component({

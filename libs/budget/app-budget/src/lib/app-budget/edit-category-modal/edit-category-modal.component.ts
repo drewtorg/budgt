@@ -18,7 +18,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { AmountPipe, amountMask } from '@budgt/shared/components';
 import { CategoryService, ExpenseService } from '@budgt/shared/services';
 import {
   Category,
@@ -27,6 +26,7 @@ import {
   Label,
   Variability,
 } from '@budgt/shared/types';
+import { AmountPipe, amountMask } from '@budgt/shared/util';
 import { InputMaskModule } from '@ngneat/input-mask';
 import { Observable, of, tap } from 'rxjs';
 @Component({

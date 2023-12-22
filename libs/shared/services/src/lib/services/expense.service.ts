@@ -11,9 +11,10 @@ import {
   where,
 } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AmountPipe } from '@budgt/shared/components';
 import { Expense } from '@budgt/shared/types';
-import { Observable } from 'rxjs';
+import { AmountPipe } from '@budgt/shared/util';
+import { Observable, switchMap } from 'rxjs';
+import { BudgetService } from './budget.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,31 +22,57 @@ import { Observable } from 'rxjs';
 export class ExpenseService {
   private firestore = inject(Firestore);
   private snackbar = inject(MatSnackBar);
+  private budgetService = inject(BudgetService);
 
   amountPipe = new AmountPipe();
 
   getExpenses(): Observable<Expense[]> {
     const expenses = query(
-      collection(this.firestore, 'budget', 'fhkEtoq6d1eNN8hfTkLg', 'expenses'),
+      collection(
+        this.firestore,
+        'budget',
+        this.budgetService.currentBudget().id,
+        'expenses',
+      ),
     );
-    return collectionData(expenses, {
-      idField: 'id',
-    }) as Observable<Expense[]>;
+    return this.budgetService.loadBudget$.pipe(
+      switchMap(
+        () =>
+          collectionData(expenses, {
+            idField: 'id',
+          }) as Observable<Expense[]>,
+      ),
+    );
   }
 
   getExpensesByCategory(category: string): Observable<Expense[]> {
     const expenses = query(
-      collection(this.firestore, 'budget', 'fhkEtoq6d1eNN8hfTkLg', 'expenses'),
+      collection(
+        this.firestore,
+        'budget',
+        this.budgetService.currentBudget().id,
+        'expenses',
+      ),
       where('category', '==', category),
     );
-    return collectionData(expenses, {
-      idField: 'id',
-    }) as Observable<Expense[]>;
+    return this.budgetService.loadBudget$.pipe(
+      switchMap(
+        () =>
+          collectionData(expenses, {
+            idField: 'id',
+          }) as Observable<Expense[]>,
+      ),
+    );
   }
 
   addExpense(expense: Expense) {
     addDoc(
-      collection(this.firestore, 'budget', 'fhkEtoq6d1eNN8hfTkLg', 'expenses'),
+      collection(
+        this.firestore,
+        'budget',
+        this.budgetService.currentBudget().id,
+        'expenses',
+      ),
       {
         ...expense,
       },
@@ -62,7 +89,13 @@ export class ExpenseService {
 
   updateExpense(id: string, expense: Expense) {
     setDoc(
-      doc(this.firestore, 'budget', 'fhkEtoq6d1eNN8hfTkLg', 'expenses', id),
+      doc(
+        this.firestore,
+        'budget',
+        this.budgetService.currentBudget().id,
+        'expenses',
+        id,
+      ),
       expense,
     );
 
@@ -80,7 +113,7 @@ export class ExpenseService {
       doc(
         this.firestore,
         'budget',
-        'fhkEtoq6d1eNN8hfTkLg',
+        this.budgetService.currentBudget().id,
         'expenses',
         expense.id,
       ),

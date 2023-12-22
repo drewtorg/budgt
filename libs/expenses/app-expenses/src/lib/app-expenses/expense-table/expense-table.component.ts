@@ -7,9 +7,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { AmountPipe, YearMonthDayPipe } from '@budgt/shared/components';
-import { ExpenseService } from '@budgt/shared/services';
+import { BudgetService, ExpenseService } from '@budgt/shared/services';
 import { Expense } from '@budgt/shared/types';
+import { AmountPipe, YearMonthDayPipe } from '@budgt/shared/util';
 import { tap } from 'rxjs';
 import { EditExpenseModalComponent } from '../edit-expense-modal/edit-expense-modal.component';
 
@@ -37,6 +37,7 @@ export class ExpenseTableComponent {
   }
 
   expenseService = inject(ExpenseService);
+  budgetService = inject(BudgetService);
   snackbar = inject(MatSnackBar);
   matDialog = inject(MatDialog);
 
@@ -44,6 +45,7 @@ export class ExpenseTableComponent {
   yearMonthDayPipe = new YearMonthDayPipe();
 
   expenses$ = this.expenseService.getExpenses().pipe(
+    tap((data) => console.log(data)),
     tap(
       (data) =>
         (this.dataSource.data = data.map((d) => ({

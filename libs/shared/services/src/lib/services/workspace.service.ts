@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import {
   Firestore,
   addDoc,
@@ -22,7 +22,7 @@ export class WorkspaceService {
 
   private WORKSPACE_ID_KEY = 'budgt-workspace';
 
-  currentWorkspace?: Workspace;
+  currentWorkspace = signal<Workspace | undefined>(undefined);
 
   constructor() {
     this.initializeWorkspace();
@@ -40,12 +40,10 @@ export class WorkspaceService {
     const id = this.getWorkspaceId();
 
     if (id !== '') {
-      docData(doc(this.firestore, 'workspace', id), {
-        idField: 'id',
-      })
+      this.getWorkspace(id)
         .pipe(
           take(1),
-          tap((w) => (this.currentWorkspace = w as Workspace)),
+          tap((w) => this.currentWorkspace.set(w as Workspace)),
         )
         .subscribe();
     }
@@ -67,10 +65,16 @@ export class WorkspaceService {
         filter((w) => w.length > 0),
         map((w) => w[0]),
         tap((w) => this.setWorkspaceId(w.id)),
-        tap((w) => (this.currentWorkspace = w)),
+        tap((w) => this.currentWorkspace.set(w as Workspace)),
         tap(() => this.router.navigate(['budget'])),
       )
       .subscribe();
+  }
+
+  getWorkspace(id: string) {
+    return docData(doc(this.firestore, 'workspaces', id), {
+      idField: 'id',
+    });
   }
 
   async addWorkspace(workspace: Workspace): Promise<Workspace> {

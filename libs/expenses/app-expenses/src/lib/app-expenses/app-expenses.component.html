@@ -1,25 +1,22 @@
 <budgt-ui-page>
   <h1>Expense Tracking</h1>
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>
-        {{ currentMonth | monthYear }}
-      </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <budgt-add-expense-form></budgt-add-expense-form>
+  <h3>{{ budgetService.currentBudgetDate() | monthYear }}</h3>
 
-      <budgt-expense-table></budgt-expense-table>
+  <mat-card>
+    <mat-card-content>
+      @if (budgetService.hasCurrentBudget()) {
+        <budgt-add-expense-form></budgt-add-expense-form>
+        <budgt-expense-table></budgt-expense-table>
+      } @else {
+        <p>No budget created for this month</p>
+        <!-- TODO: create wrapper component for changing months that
+          will have the arrows and a button to  create a new  budget
+          based on previous months budget when no budget exists  for
+          current month-->
+      }
     </mat-card-content>
     <mat-card-footer>
-      <div class="footer-container">
-        <button mat-icon-button (click)="onChangeMonth(false)">
-          <mat-icon>arrow_back_ios</mat-icon>
-        </button>
-        <button mat-icon-button (click)="onChangeMonth(true)">
-          <mat-icon>arrow_forward_ios</mat-icon>
-        </button>
-      </div>
+      <budgt-ui-month-changer></budgt-ui-month-changer>
     </mat-card-footer>
   </mat-card>
 </budgt-ui-page>

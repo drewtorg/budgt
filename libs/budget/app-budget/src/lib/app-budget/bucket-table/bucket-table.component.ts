@@ -13,9 +13,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { AmountPipe } from '@budgt/shared/components';
 import { BucketService } from '@budgt/shared/services';
 import { Bucket, Category, Variability } from '@budgt/shared/types';
+import { AmountPipe } from '@budgt/shared/util';
 import { EditBucketModalComponent } from '../edit-bucket-modal/edit-bucket-modal.component';
 
 @Component({
