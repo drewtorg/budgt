@@ -74,7 +74,10 @@ export class EditCategoryModalComponent implements OnInit {
   categoryForm = this.fb.group({
     actualAmount: [this.category.actualAmount, Validators.required],
     expectedAmount: [this.category.expectedAmount, Validators.required],
-    label: [this.category.label, Validators.required],
+    label: [
+      this.category.label,
+      this.category.type === CategoryType.Expense ? Validators.required : [],
+    ],
     name: [this.category.name, Validators.required],
     type: [this.category.type, Validators.required],
     variability: [this.category.variability, Validators.required],
