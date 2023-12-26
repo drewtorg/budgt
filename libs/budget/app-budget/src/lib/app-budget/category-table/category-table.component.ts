@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 import {
   Component,
   Input,
@@ -21,6 +22,7 @@ import { EditCategoryModalComponent } from '../edit-category-modal/edit-category
   selector: 'budgt-category-table',
   standalone: true,
   imports: [
+    NgClass,
     MatTableModule,
     MatSortModule,
     MatProgressSpinnerModule,

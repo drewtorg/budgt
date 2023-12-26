@@ -1,4 +1,4 @@
-import { AsyncPipe, DatePipe } from '@angular/common';
+import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import {
   NonNullableFormBuilder,
@@ -47,6 +47,7 @@ import { Observable, of, tap } from 'rxjs';
     AsyncPipe,
     DatePipe,
     AmountPipe,
+    NgClass,
   ],
   templateUrl: './edit-category-modal.component.html',
   styleUrl: './edit-category-modal.component.css',

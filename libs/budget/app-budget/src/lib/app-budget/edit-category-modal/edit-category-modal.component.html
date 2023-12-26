@@ -89,7 +89,11 @@
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; let odd = odd; columns: displayedColumns"
+            [ngClass]="{ 'odd-row': odd }"
+          ></tr>
           <tr
             mat-footer-row
             *matFooterRowDef="displayedColumns"

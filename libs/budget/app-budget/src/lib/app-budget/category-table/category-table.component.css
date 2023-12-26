@@ -3,7 +3,11 @@
 }
 
 .mat-mdc-row:hover {
-  background-color: #eaeff4;
+  background-color: #f0f4f7;
+}
+
+.odd-row {
+  background-color: #f8f9fb;
 }
 
 .mat-mdc-footer-row {

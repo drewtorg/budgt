@@ -1,4 +1,4 @@
-import { AsyncPipe, DatePipe } from '@angular/common';
+import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
 import { Component, ViewChild, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
@@ -17,6 +17,7 @@ import { EditExpenseModalComponent } from '../edit-expense-modal/edit-expense-mo
   selector: 'budgt-expense-table',
   standalone: true,
   imports: [
+    NgClass,
     AsyncPipe,
     DatePipe,
     MatSortModule,

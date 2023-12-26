@@ -1,3 +1,4 @@
+import { NgClass } from '@angular/common';
 import {
   Component,
   Input,
@@ -22,6 +23,7 @@ import { EditBucketModalComponent } from '../edit-bucket-modal/edit-bucket-modal
   selector: 'budgt-bucket-table',
   standalone: true,
   imports: [
+    NgClass,
     MatTableModule,
     MatSortModule,
     MatProgressSpinnerModule,
