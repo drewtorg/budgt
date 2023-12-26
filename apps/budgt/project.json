@@ -15,7 +15,11 @@
         "browser": "apps/budgt/src/main.ts",
         "polyfills": ["zone.js"],
         "tsConfig": "apps/budgt/tsconfig.app.json",
-        "assets": ["apps/budgt/src/favicon.ico", "apps/budgt/src/assets"],
+        "assets": [
+          "apps/budgt/src/favicon.ico",
+          "apps/budgt/src/assets",
+          "apps/budgt/src/manifest.webmanifest"
+        ],
         "styles": [
           "@angular/material/prebuilt-themes/deeppurple-amber.css",
           "apps/budgt/src/styles.scss"
@@ -36,7 +40,8 @@
               "maximumError": "4kb"
             }
           ],
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "serviceWorker": "apps/budgt/ngsw-config.json"
         },
         "development": {
           "optimization": false,

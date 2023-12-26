@@ -67,7 +67,7 @@ export class CategoryTableComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    const categories = changes['categories'].currentValue;
+    const categories = changes['categories']?.currentValue;
     if (categories) {
       this.dataSource.data = categories;
     }
