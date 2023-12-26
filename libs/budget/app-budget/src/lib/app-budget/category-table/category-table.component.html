@@ -19,7 +19,7 @@
         <td mat-cell *matCellDef="let element">
           {{ element.name }}
         </td>
-        <td mat-footer-cell *matFooterCellDef>Totals</td>
+        <td mat-footer-cell *matFooterCellDef>Total</td>
       </ng-container>
 
       <ng-container matColumnDef="expectedAmount">
@@ -50,25 +50,6 @@
           {{ element.actualAmount | amount }}
         </td>
         <td mat-footer-cell *matFooterCellDef>{{ totalActual | amount }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="variability">
-        <th
-          mat-header-cell
-          *matHeaderCellDef
-          mat-sort-header
-          sortActionDescription="Sort by category"
-        >
-          Fixed
-        </th>
-        <td mat-cell *matCellDef="let element">
-          @if (element.variability === Variability.Fixed) {
-            <mat-icon>done</mat-icon>
-          } @else {
-            <mat-icon>close</mat-icon>
-          }
-        </td>
-        <td mat-footer-cell *matFooterCellDef>N/A</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

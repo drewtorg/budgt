@@ -46,7 +46,7 @@ export class CategoryTableComponent implements OnChanges {
   amountPipe = new AmountPipe();
   Variability = Variability;
 
-  displayedColumns = ['name', 'expectedAmount', 'actualAmount', 'variability'];
+  displayedColumns = ['name', 'expectedAmount', 'actualAmount'];
 
   get totalExpected() {
     return this.dataSource.data
