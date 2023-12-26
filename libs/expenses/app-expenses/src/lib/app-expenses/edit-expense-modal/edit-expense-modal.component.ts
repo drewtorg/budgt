@@ -58,7 +58,7 @@ export class EditExpenseModalComponent {
     date: [new Date(this.expense.date), Validators.required],
   });
 
-  categories$ = this.categoryService.getCategories();
+  groupedCategories$ = this.categoryService.getGroupedExpenseCategories();
 
   onCancel() {
     this.matDialogRef.close();

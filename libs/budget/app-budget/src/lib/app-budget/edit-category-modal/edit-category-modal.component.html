@@ -28,20 +28,20 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Variability</mat-label>
-      <mat-select formControlName="variability">
-        <mat-option [value]="Variability.Fixed">Fixed</mat-option>
-        <mat-option [value]="Variability.Variable">Variable</mat-option>
-      </mat-select>
+      <select formControlName="variability" matNativeControl>
+        <option [value]="Variability.Fixed">Fixed</option>
+        <option [value]="Variability.Variable">Variable</option>
+      </select>
     </mat-form-field>
 
     @if (category.type === CategoryType.Expense) {
       <mat-form-field appearance="outline">
         <mat-label>Label</mat-label>
-        <mat-select formControlName="label">
-          <mat-option [value]="Label.Need">Needs</mat-option>
-          <mat-option [value]="Label.Dreams">Dreams</mat-option>
-          <mat-option [value]="Label.Want">Wants</mat-option>
-        </mat-select>
+        <select formControlName="label" matNativeControl>
+          <option [value]="Label.Need">Needs</option>
+          <option [value]="Label.Dreams">Dreams</option>
+          <option [value]="Label.Want">Wants</option>
+        </select>
       </mat-form-field>
     }
   </form>

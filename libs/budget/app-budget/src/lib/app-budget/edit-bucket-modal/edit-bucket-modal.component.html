@@ -3,11 +3,15 @@
   <form [formGroup]="bucketForm" class="bucket-form">
     <mat-form-field appearance="outline">
       <mat-label>Category</mat-label>
-      <mat-select formControlName="category">
-        @for (category of categories$ | async; track category.id) {
-          <mat-option [value]="category.name">{{ category.name }}</mat-option>
+      <select formControlName="category" matNativeControl>
+        @for (group of groupedCategories$ | async; track group.label) {
+          <optgroup [label]="group.label">
+            @for (category of group.categories; track category.id) {
+              <option [value]="category.name">{{ category.name }}</option>
+            }
+          </optgroup>
         }
-      </mat-select>
+      </select>
       @if (bucketForm.controls.category.invalid) {
         <mat-error>You must select a value</mat-error>
       }

@@ -14,15 +14,15 @@
 
   <mat-form-field appearance="outline">
     <mat-label>Category</mat-label>
-    <mat-select formControlName="category">
+    <select formControlName="category" matNativeControl>
       @for (group of groupedCategories$ | async; track group.label) {
-        <mat-optgroup [label]="group.label">
+        <optgroup [label]="group.label">
           @for (category of group.categories; track category.id) {
-            <mat-option [value]="category.name">{{ category.name }}</mat-option>
+            <option [value]="category.name">{{ category.name }}</option>
           }
-        </mat-optgroup>
+        </optgroup>
       }
-    </mat-select>
+    </select>
     @if (expenseForm.controls.category.invalid) {
       <mat-error>You must select a value</mat-error>
     }

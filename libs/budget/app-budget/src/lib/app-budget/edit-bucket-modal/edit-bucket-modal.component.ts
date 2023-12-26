@@ -72,7 +72,7 @@ export class EditBucketModalComponent {
 
   displayedColumns = ['category', 'amount'];
 
-  categories$ = this.categoryService.getCategories();
+  groupedCategories$ = this.categoryService.getGroupedExpenseCategories();
 
   onCancel() {
     this.matDialogRef.close();
