@@ -22,3 +22,11 @@
 .spinner {
   margin: 16px 0 16px 0;
 }
+
+.green {
+  color: #18864b;
+}
+
+.red {
+  color: #f44336;
+}

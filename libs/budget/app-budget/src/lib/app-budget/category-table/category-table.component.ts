@@ -14,7 +14,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CategoryService } from '@budgt/shared/services';
-import { Category, Variability } from '@budgt/shared/types';
+import { Category, CategoryType, Variability } from '@budgt/shared/types';
 import { AmountPipe } from '@budgt/shared/util';
 import { EditCategoryModalComponent } from '../edit-category-modal/edit-category-modal.component';
 
@@ -35,6 +35,7 @@ import { EditCategoryModalComponent } from '../edit-category-modal/edit-category
 })
 export class CategoryTableComponent implements OnChanges {
   @Input() categories: Category[] | null = null;
+  @Input() type: CategoryType = CategoryType.Expense;
   @ViewChild(MatSort) set sort(sort: MatSort | undefined) {
     if (sort) {
       this.dataSource.sort = sort;
@@ -67,6 +68,25 @@ export class CategoryTableComponent implements OnChanges {
     if (categories) {
       this.dataSource.data = categories;
     }
+  }
+
+  getActualAmountCellClass(actualAmount: number, expectedAmount: number) {
+    const actualExceedsExpected = actualAmount > expectedAmount;
+    if (this.type === CategoryType.Expense) {
+      return {
+        green: !actualExceedsExpected,
+        red: actualExceedsExpected,
+      };
+    }
+
+    if (this.type === CategoryType.Income) {
+      return {
+        green: actualExceedsExpected,
+        red: !actualExceedsExpected,
+      };
+    }
+
+    return {};
   }
 
   onRowClick(category: Category) {

@@ -47,9 +47,22 @@
           Actual
         </th>
         <td mat-cell *matCellDef="let element">
-          {{ element.actualAmount | amount }}
+          <span
+            [ngClass]="
+              getActualAmountCellClass(
+                element.actualAmount,
+                element.expectedAmount
+              )
+            "
+            >{{ element.actualAmount | amount }}</span
+          >
         </td>
-        <td mat-footer-cell *matFooterCellDef>{{ totalActual | amount }}</td>
+        <td mat-footer-cell *matFooterCellDef>
+          <span
+            [ngClass]="getActualAmountCellClass(totalActual, totalExpected)"
+            >{{ totalActual | amount }}</span
+          >
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
