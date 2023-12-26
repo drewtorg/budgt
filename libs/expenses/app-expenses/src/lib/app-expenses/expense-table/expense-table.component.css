@@ -6,6 +6,10 @@
   background-color: #eaeff4;
 }
 
+.footer-row {
+  font-weight: 500;
+}
+
 .expense-table {
   margin-top: 16px;
 }

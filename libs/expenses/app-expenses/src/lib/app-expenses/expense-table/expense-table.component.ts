@@ -10,7 +10,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { BudgetService, ExpenseService } from '@budgt/shared/services';
 import { Expense } from '@budgt/shared/types';
 import { AmountPipe, YearMonthDayPipe } from '@budgt/shared/util';
-import { tap } from 'rxjs';
+import { map, tap } from 'rxjs';
 import { EditExpenseModalComponent } from '../edit-expense-modal/edit-expense-modal.component';
 
 @Component({
@@ -45,7 +45,6 @@ export class ExpenseTableComponent {
   yearMonthDayPipe = new YearMonthDayPipe();
 
   expenses$ = this.expenseService.getExpenses().pipe(
-    tap((data) => console.log(data)),
     tap(
       (data) =>
         (this.dataSource.data = data.map((d) => ({
@@ -53,6 +52,10 @@ export class ExpenseTableComponent {
           date: this.yearMonthDayPipe.transform(d.date),
         }))),
     ),
+  );
+
+  totalAmount$ = this.expenses$.pipe(
+    map((e) => e.reduce((prev, curr) => prev + curr.amount, 0)),
   );
 
   displayedColumns = ['date', 'amount', 'category'];

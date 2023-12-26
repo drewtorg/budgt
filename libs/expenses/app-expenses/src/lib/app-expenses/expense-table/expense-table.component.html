@@ -20,6 +20,7 @@
         <td mat-cell *matCellDef="let element">
           {{ element.date | date: 'MMM d' }}
         </td>
+        <td mat-footer-cell *matFooterCellDef>Total</td>
       </ng-container>
 
       <ng-container matColumnDef="amount">
@@ -33,6 +34,9 @@
         </th>
         <td mat-cell *matCellDef="let element">
           {{ element.amount | amount }}
+        </td>
+        <td mat-footer-cell *matFooterCellDef>
+          {{ totalAmount$ | async | amount }}
         </td>
       </ng-container>
 
@@ -48,6 +52,7 @@
         <td mat-cell *matCellDef="let element">
           {{ element.category }}
         </td>
+        <td mat-footer-cell *matFooterCellDef></td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -55,6 +60,11 @@
         mat-row
         *matRowDef="let row; columns: displayedColumns"
         (click)="onRowClick(row)"
+      ></tr>
+      <tr
+        mat-footer-row
+        *matFooterRowDef="displayedColumns"
+        class="footer-row"
       ></tr>
     </table>
   } @else {

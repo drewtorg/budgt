@@ -6,7 +6,11 @@ import { Pipe, PipeTransform } from '@angular/core';
   pure: true,
 })
 export class AmountPipe implements PipeTransform {
-  transform(value: number, digits = 0): string {
+  transform(value: number | null, digits = 0): string {
+    if (value === null) {
+      return '';
+    }
+
     return new Intl.NumberFormat('sv-SE', {
       style: 'currency',
       currency: 'SEK',
