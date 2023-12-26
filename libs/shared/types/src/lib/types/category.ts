@@ -33,3 +33,8 @@ export enum Variability {
   Fixed = 'fixed',
   Variable = 'variable',
 }
+
+export interface CategoryGroup {
+  label: string;
+  categories: Category[];
+}

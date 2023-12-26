@@ -11,8 +11,13 @@ import {
   where,
 } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Category } from '@budgt/shared/types';
-import { Observable, switchMap } from 'rxjs';
+import {
+  Category,
+  CategoryGroup,
+  Label,
+  Variability,
+} from '@budgt/shared/types';
+import { Observable, map, switchMap } from 'rxjs';
 import { BudgetService } from './budget.service';
 
 @Injectable({
@@ -58,6 +63,52 @@ export class CategoryService {
           collectionData(categories, {
             idField: 'id',
           }) as Observable<Category[]>,
+      ),
+    );
+  }
+
+  getGroupedExpenseCategories(): Observable<CategoryGroup[]> {
+    return this.getExpenseCategories().pipe(
+      map((c) =>
+        c.reduce(
+          (acc, cur) => {
+            const group = acc[cur.label.toString()];
+            if (!group) {
+              acc[cur.label.toString()] = {
+                label: cur.label[0].toLocaleUpperCase() + cur.label.slice(1),
+                categories: [cur],
+              };
+            } else {
+              group.categories.push(cur);
+            }
+            return acc;
+          },
+          {} as {
+            [label: string]: CategoryGroup | undefined;
+          },
+        ),
+      ),
+      map(
+        (groups) =>
+          [
+            groups[Label.Need],
+            groups[Label.Want],
+            groups[Label.Dreams],
+          ] as CategoryGroup[],
+      ),
+      map((groups) =>
+        groups.map((g) => {
+          const categories = [...g.categories];
+          categories.sort((a, b) => {
+            if (a.variability !== b.variability) {
+              return a.variability === Variability.Variable ? -1 : 1;
+            }
+
+            return b.expectedAmount - a.expectedAmount;
+          });
+          g.categories = categories;
+          return g;
+        }),
       ),
     );
   }
