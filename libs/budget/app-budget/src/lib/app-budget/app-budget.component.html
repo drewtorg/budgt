@@ -11,6 +11,7 @@
         <mat-card-content>
           <budgt-category-table
             [type]="CategoryType.Income"
+            [totalIncome]="totalIncome$ | async"
             [categories]="incomeCategories$ | async"
           ></budgt-category-table>
         </mat-card-content>
@@ -35,16 +36,19 @@
           <h4>Needs</h4>
           <budgt-category-table
             [type]="CategoryType.Expense"
+            [totalIncome]="totalIncome$ | async"
             [categories]="needsExpenses$ | async"
           ></budgt-category-table>
           <h4>Dreams</h4>
           <budgt-category-table
             [type]="CategoryType.Expense"
+            [totalIncome]="totalIncome$ | async"
             [categories]="dreamsExpenses$ | async"
           ></budgt-category-table>
           <h4>Wants</h4>
           <budgt-category-table
             [type]="CategoryType.Expense"
+            [totalIncome]="totalIncome$ | async"
             [categories]="wantsExpenses$ | async"
           ></budgt-category-table>
         </mat-card-content>

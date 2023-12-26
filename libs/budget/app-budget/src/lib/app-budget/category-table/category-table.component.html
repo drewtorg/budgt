@@ -47,21 +47,33 @@
           Actual
         </th>
         <td mat-cell *matCellDef="let element">
-          <span
+          <div
+            class="actual-amount-cell"
             [ngClass]="
               getActualAmountCellClass(
                 element.actualAmount,
                 element.expectedAmount
               )
             "
-            >{{ element.actualAmount | amount }}</span
           >
+            <span>{{ element.actualAmount | amount }}</span>
+            @if (element.actualAmount) {
+              <span class="percent"
+                >({{ element.actualAmount / totalActual | percent }})</span
+              >
+            }
+          </div>
         </td>
         <td mat-footer-cell *matFooterCellDef>
-          <span
+          <div
+            class="actual-amount-cell"
             [ngClass]="getActualAmountCellClass(totalActual, totalExpected)"
-            >{{ totalActual | amount }}</span
           >
+            <span>{{ totalActual | amount }}</span>
+            <span class="percent"
+              >({{ totalActual / (totalIncome || 0) | percent }})</span
+            >
+          </div>
         </td>
       </ng-container>
 

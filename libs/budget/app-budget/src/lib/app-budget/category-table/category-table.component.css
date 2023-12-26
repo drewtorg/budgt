@@ -23,10 +23,26 @@
   margin: 16px 0 16px 0;
 }
 
+.actual-amount-cell {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+}
+
 .green {
   color: #18864b;
 }
 
 .red {
   color: #f44336;
+}
+
+.percent {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .percent {
+    display: inline;
+  }
 }

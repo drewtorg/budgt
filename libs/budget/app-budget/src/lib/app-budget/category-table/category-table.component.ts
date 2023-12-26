@@ -1,4 +1,4 @@
-import { NgClass } from '@angular/common';
+import { NgClass, PercentPipe } from '@angular/common';
 import {
   Component,
   Input,
@@ -29,6 +29,7 @@ import { EditCategoryModalComponent } from '../edit-category-modal/edit-category
     MatIconModule,
     MatButtonModule,
     AmountPipe,
+    PercentPipe,
   ],
   templateUrl: './category-table.component.html',
   styleUrl: './category-table.component.css',
@@ -36,6 +37,8 @@ import { EditCategoryModalComponent } from '../edit-category-modal/edit-category
 export class CategoryTableComponent implements OnChanges {
   @Input() categories: Category[] | null = null;
   @Input() type: CategoryType = CategoryType.Expense;
+  @Input() totalIncome: number | null = null;
+
   @ViewChild(MatSort) set sort(sort: MatSort | undefined) {
     if (sort) {
       this.dataSource.sort = sort;

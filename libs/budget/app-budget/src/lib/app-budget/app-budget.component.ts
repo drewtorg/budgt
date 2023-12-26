@@ -54,6 +54,9 @@ export class AppBudgetComponent {
       categories.filter((c) => c.type === CategoryType.Income),
     ),
   );
+  totalIncome$ = this.incomeCategories$.pipe(
+    map((c) => c.map((c) => c.actualAmount).reduce((acc, cur) => acc + cur, 0)),
+  );
   expenseCategories$ = this.categories$.pipe(
     map((categories) =>
       categories.filter((c) => c.type === CategoryType.Expense),
