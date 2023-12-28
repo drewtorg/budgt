@@ -14,7 +14,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { BucketService } from '@budgt/shared/services';
+import { BucketService, WorkspaceService } from '@budgt/shared/services';
 import { Bucket, Category, Variability } from '@budgt/shared/types';
 import { AmountPipe } from '@budgt/shared/util';
 import { EditBucketModalComponent } from '../edit-bucket-modal/edit-bucket-modal.component';
@@ -44,6 +44,7 @@ export class BucketTableComponent implements OnChanges {
   }
 
   bucketService = inject(BucketService);
+  workspaceService = inject(WorkspaceService);
   dialog = inject(MatDialog);
 
   dataSource = new MatTableDataSource<Category>();
@@ -62,7 +63,7 @@ export class BucketTableComponent implements OnChanges {
   onRowClick(bucket: Bucket) {
     this.dialog.open(EditBucketModalComponent, {
       data: {
-        workspaceId: 'REWRjQEfLbmLu2OJNCpi',
+        workspaceId: this.workspaceService.currentWorkspace()?.id,
         bucket: { ...bucket },
       },
       minWidth: '375px',

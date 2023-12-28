@@ -36,18 +36,21 @@
           <h4>Needs</h4>
           <budgt-category-table
             [type]="CategoryType.Expense"
+            [label]="Label.Need"
             [totalIncome]="totalIncome$ | async"
             [categories]="needsExpenses$ | async"
           ></budgt-category-table>
           <h4>Dreams</h4>
           <budgt-category-table
             [type]="CategoryType.Expense"
+            [label]="Label.Dreams"
             [totalIncome]="totalIncome$ | async"
             [categories]="dreamsExpenses$ | async"
           ></budgt-category-table>
           <h4>Wants</h4>
           <budgt-category-table
             [type]="CategoryType.Expense"
+            [label]="Label.Want"
             [totalIncome]="totalIncome$ | async"
             [categories]="wantsExpenses$ | async"
           ></budgt-category-table>
@@ -60,22 +63,6 @@
               (click)="onAddCategory(CategoryType.Expense)"
             >
               Add Row
-            </button>
-          </div>
-        </mat-card-footer>
-      </mat-card>
-
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title> Revolving Expense Buckets </mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-          <budgt-bucket-table [buckets]="buckets$ | async"></budgt-bucket-table>
-        </mat-card-content>
-        <mat-card-footer>
-          <div class="card-footer">
-            <button mat-button color="primary" (click)="onAddBucket()">
-              Add Bucket
             </button>
           </div>
         </mat-card-footer>

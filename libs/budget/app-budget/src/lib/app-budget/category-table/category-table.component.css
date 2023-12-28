@@ -11,7 +11,7 @@
 }
 
 .mat-mdc-footer-row {
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .spinner-container {
@@ -29,11 +29,23 @@
   gap: 4px;
 }
 
-.green {
+.exceeds-expected {
+  font-weight: 600;
+}
+
+.income {
   color: #18864b;
 }
 
-.red {
+.need {
+  color: #f44336;
+}
+
+.dreams {
+  color: #1095c9;
+}
+
+.want {
   color: #f44336;
 }
 

@@ -16,9 +16,7 @@ import {
 import { CategoryType, Label } from '@budgt/shared/types';
 import { MonthYearPipe } from '@budgt/shared/util';
 import { map } from 'rxjs';
-import { BucketTableComponent } from './bucket-table/bucket-table.component';
 import { CategoryTableComponent } from './category-table/category-table.component';
-import { EditBucketModalComponent } from './edit-bucket-modal/edit-bucket-modal.component';
 import { EditCategoryModalComponent } from './edit-category-modal/edit-category-modal.component';
 
 @Component({
@@ -30,7 +28,6 @@ import { EditCategoryModalComponent } from './edit-category-modal/edit-category-
     MatButtonModule,
     UiPageComponent,
     CategoryTableComponent,
-    BucketTableComponent,
     MonthYearPipe,
     UiMonthChangerComponent,
   ],
@@ -45,6 +42,7 @@ export class AppBudgetComponent {
   dialog = inject(MatDialog);
 
   CategoryType = CategoryType;
+  Label = Label;
 
   expenses$ = this.expenseService.getExpenses();
   buckets$ = this.bucketService.getBuckets();
@@ -76,15 +74,6 @@ export class AppBudgetComponent {
     this.dialog.open(EditCategoryModalComponent, {
       data: {
         type,
-      },
-      minWidth: '375px',
-    });
-  }
-
-  onAddBucket() {
-    this.dialog.open(EditBucketModalComponent, {
-      data: {
-        bucket: {},
       },
       minWidth: '375px',
     });

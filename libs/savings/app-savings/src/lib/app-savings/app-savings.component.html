@@ -1,1 +1,21 @@
-<p>app-savings works!</p>
+<budgt-ui-page>
+  <h1>Savings</h1>
+
+  <div class="card-container">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title> Revolving Expense Buckets </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <budgt-bucket-table [buckets]="buckets$ | async"></budgt-bucket-table>
+      </mat-card-content>
+      <mat-card-footer>
+        <div class="card-footer">
+          <button mat-button color="primary" (click)="onAddBucket()">
+            Add Bucket
+          </button>
+        </div>
+      </mat-card-footer>
+    </mat-card>
+  </div>
+</budgt-ui-page>
