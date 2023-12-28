@@ -41,6 +41,7 @@
             [totalIncome]="totalIncome$ | async"
             [totals]="needsTotals$ | async"
             [categories]="needsExpenses$ | async"
+            [expenses]="expenses$ | async"
           ></budgt-category-table>
           <h4>Dreams</h4>
           <budgt-category-table
@@ -49,6 +50,7 @@
             [totalIncome]="totalIncome$ | async"
             [totals]="dreamsTotals$ | async"
             [categories]="dreamsExpenses$ | async"
+            [expenses]="expenses$ | async"
           ></budgt-category-table>
           <h4>Wants</h4>
           <budgt-category-table
@@ -57,6 +59,7 @@
             [totalIncome]="totalIncome$ | async"
             [totals]="wantsTotals$ | async"
             [categories]="wantsExpenses$ | async"
+            [expenses]="expenses$ | async"
           ></budgt-category-table>
         </mat-card-content>
         <mat-card-footer>

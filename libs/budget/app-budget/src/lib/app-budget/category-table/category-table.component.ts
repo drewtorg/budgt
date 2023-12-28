@@ -12,10 +12,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { calculateActualAmount } from '@budgt/shared/functions';
 import { CategoryService } from '@budgt/shared/services';
 import {
   Category,
   CategoryType,
+  Expense,
   Label,
   Totals,
   Variability,
@@ -44,6 +46,7 @@ export class CategoryTableComponent implements OnChanges {
   @Input() label = Label.Want;
   @Input() totals: Totals | null = null;
   @Input() totalIncome: number | null = null;
+  @Input() expenses: Expense[] | null = null;
 
   @ViewChild(MatSort) set sort(sort: MatSort | undefined) {
     if (sort) {
@@ -59,6 +62,10 @@ export class CategoryTableComponent implements OnChanges {
   Variability = Variability;
 
   displayedColumns = ['name', 'expectedAmount', 'actualAmount'];
+
+  getActualAmount(category: Category): number {
+    return calculateActualAmount(category, this.expenses || []);
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     const categories = changes['categories']?.currentValue;

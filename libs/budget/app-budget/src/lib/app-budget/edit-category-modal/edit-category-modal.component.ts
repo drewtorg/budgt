@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -43,6 +44,7 @@ import { Observable, of, tap } from 'rxjs';
     MatDialogActions,
     MatTableModule,
     MatSortModule,
+    MatCheckboxModule,
     InputMaskModule,
     AsyncPipe,
     DatePipe,
@@ -82,6 +84,7 @@ export class EditCategoryModalComponent implements OnInit {
     name: [this.category.name, Validators.required],
     type: [this.category.type, Validators.required],
     variability: [this.category.variability, Validators.required],
+    autoCalculate: [!this.category.actualAmount],
   });
 
   displayedColumns = ['date', 'amount'];
@@ -117,8 +120,13 @@ export class EditCategoryModalComponent implements OnInit {
     }
 
     const c = {
-      ...this.categoryForm.value,
-      actualAmount: this.categoryForm.controls.actualAmount.value,
+      label: this.categoryForm.controls.label.value,
+      name: this.categoryForm.controls.name.value,
+      type: this.categoryForm.controls.type.value,
+      variability: this.categoryForm.controls.variability.value,
+      actualAmount: this.categoryForm.controls.autoCalculate.value
+        ? 0
+        : this.categoryForm.controls.actualAmount.value,
       expectedAmount: this.categoryForm.controls.expectedAmount.value,
     } as Category;
 

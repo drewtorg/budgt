@@ -11,20 +11,22 @@
       <input
         matInput
         formControlName="expectedAmount"
-        inputmode="decimal"
+        inputmode="numeric"
         [inputMask]="amountMask"
       />
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Actual</mat-label>
-      <input
-        matInput
-        formControlName="actualAmount"
-        inputmode="decimal"
-        [inputMask]="amountMask"
-      />
-    </mat-form-field>
+    @if (category.type === CategoryType.Income) {
+      <mat-form-field appearance="outline">
+        <mat-label>Actual</mat-label>
+        <input
+          matInput
+          formControlName="actualAmount"
+          inputmode="numeric"
+          [inputMask]="amountMask"
+        />
+      </mat-form-field>
+    }
 
     <mat-form-field appearance="outline">
       <mat-label>Variability</mat-label>
@@ -43,6 +45,22 @@
           <option [value]="Label.Want">Wants</option>
         </select>
       </mat-form-field>
+
+      <mat-checkbox formControlName="autoCalculate"
+        >Auto-Calculate</mat-checkbox
+      >
+
+      @if (!categoryForm.controls.autoCalculate.value) {
+        <mat-form-field appearance="outline">
+          <mat-label>Actual</mat-label>
+          <input
+            matInput
+            formControlName="actualAmount"
+            inputmode="numeric"
+            [inputMask]="amountMask"
+          />
+        </mat-form-field>
+      }
     }
   </form>
   @if (category.type === CategoryType.Expense) {

@@ -7,15 +7,22 @@ import {
   UiMonthChangerComponent,
   UiPageComponent,
 } from '@budgt/shared/components';
+import { calculateActualAmount } from '@budgt/shared/functions';
 import {
   BucketService,
   BudgetService,
   CategoryService,
   ExpenseService,
 } from '@budgt/shared/services';
-import { Category, CategoryType, Label, Totals } from '@budgt/shared/types';
+import {
+  Category,
+  CategoryType,
+  Expense,
+  Label,
+  Totals,
+} from '@budgt/shared/types';
 import { MonthYearPipe } from '@budgt/shared/util';
-import { Observable, combineLatest, map } from 'rxjs';
+import { Observable, combineLatest, map, withLatestFrom } from 'rxjs';
 import { CategoryTableComponent } from './category-table/category-table.component';
 import { EditCategoryModalComponent } from './edit-category-modal/edit-category-modal.component';
 import { FinalResultsTableComponent } from './final-results-table/final-results-table.component';
@@ -54,7 +61,10 @@ export class AppBudgetComponent {
       categories.filter((c) => c.type === CategoryType.Income),
     ),
   );
-  incomeTotals$ = this.incomeCategories$.pipe(this.mapTotals());
+  incomeTotals$ = this.incomeCategories$.pipe(
+    withLatestFrom(this.expenses$),
+    this.mapTotals(),
+  );
   totalIncome$ = this.incomeTotals$.pipe(map((totals) => totals.actual));
   expenseCategories$ = this.categories$.pipe(
     map((categories) =>
@@ -64,15 +74,24 @@ export class AppBudgetComponent {
   needsExpenses$ = this.expenseCategories$.pipe(
     map((categories) => categories.filter((c) => c.label === Label.Need)),
   );
-  needsTotals$ = this.needsExpenses$.pipe(this.mapTotals());
+  needsTotals$ = this.needsExpenses$.pipe(
+    withLatestFrom(this.expenses$),
+    this.mapTotals(),
+  );
   wantsExpenses$ = this.expenseCategories$.pipe(
     map((categories) => categories.filter((c) => c.label === Label.Want)),
   );
-  wantsTotals$ = this.wantsExpenses$.pipe(this.mapTotals());
+  wantsTotals$ = this.wantsExpenses$.pipe(
+    withLatestFrom(this.expenses$),
+    this.mapTotals(),
+  );
   dreamsExpenses$ = this.expenseCategories$.pipe(
     map((categories) => categories.filter((c) => c.label === Label.Dreams)),
   );
-  dreamsTotals$ = this.dreamsExpenses$.pipe(this.mapTotals());
+  dreamsTotals$ = this.dreamsExpenses$.pipe(
+    withLatestFrom(this.expenses$),
+    this.mapTotals(),
+  );
 
   allTotals$ = combineLatest(
     [
@@ -90,21 +109,23 @@ export class AppBudgetComponent {
   );
 
   mapTotals() {
-    return function (source: Observable<Category[]>): Observable<Totals> {
+    return function (
+      source: Observable<[Category[], Expense[]]>,
+    ): Observable<Totals> {
       return new Observable((subscriber) => {
         source.subscribe({
-          next(value) {
-            const expected = value
+          next([categories, expenses]) {
+            const expected = categories
               .map((c) => c.expectedAmount)
               .reduce((acc, cur) => acc + cur, 0);
-            const actual = value
-              .map((c) => c.actualAmount)
+            const actual = categories
+              .map((c) => calculateActualAmount(c, expenses))
               .reduce((acc, cur) => acc + cur, 0);
             subscriber.next({
               actual,
               expected,
-              label: value?.[0].label,
-              type: value?.[0].type,
+              label: categories?.[0].label,
+              type: categories?.[0].type,
             });
           },
           error(error) {
