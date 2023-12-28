@@ -10,7 +10,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { dateToString } from '@budgt/shared/functions';
 import { CategoryService, ExpenseService } from '@budgt/shared/services';
 import { Expense } from '@budgt/shared/types';
@@ -37,7 +36,6 @@ export class AddExpenseFormComponent {
   fb = inject(NonNullableFormBuilder);
   expenseService = inject(ExpenseService);
   categoryService = inject(CategoryService);
-  snackbar = inject(MatSnackBar);
 
   groupedCategories$ = this.categoryService.getGroupedExpenseCategories();
 

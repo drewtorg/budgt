@@ -10,7 +10,7 @@ import {
   setDoc,
   where,
 } from '@angular/fire/firestore';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { Expense } from '@budgt/shared/types';
 import { AmountPipe } from '@budgt/shared/util';
 import { Observable, switchMap } from 'rxjs';
@@ -25,6 +25,10 @@ export class ExpenseService {
   private budgetService = inject(BudgetService);
 
   amountPipe = new AmountPipe();
+  snackbarConfig: MatSnackBarConfig = {
+    duration: 3000,
+    verticalPosition: 'top',
+  };
 
   getExpenses(): Observable<Expense[]> {
     const expenses = query(
@@ -81,9 +85,7 @@ export class ExpenseService {
     this.snackbar.open(
       'Added expense for ' + this.amountPipe.transform(expense.amount),
       'Dismiss',
-      {
-        duration: 3000,
-      },
+      this.snackbarConfig,
     );
   }
 
@@ -102,9 +104,7 @@ export class ExpenseService {
     this.snackbar.open(
       'Updated expense for: ' + this.amountPipe.transform(expense.amount),
       'Dismiss',
-      {
-        duration: 3000,
-      },
+      this.snackbarConfig,
     );
   }
 
@@ -122,9 +122,7 @@ export class ExpenseService {
     this.snackbar.open(
       'Removed expense for ' + this.amountPipe.transform(expense.amount),
       'Dismiss',
-      {
-        duration: 3000,
-      },
+      this.snackbarConfig,
     );
   }
 }

@@ -10,7 +10,7 @@ import {
   setDoc,
   where,
 } from '@angular/fire/firestore';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { capitalize } from '@budgt/shared/functions';
 import {
   Category,
@@ -28,6 +28,11 @@ export class CategoryService {
   private firestore = inject(Firestore);
   private snackbar = inject(MatSnackBar);
   private budgetService = inject(BudgetService);
+
+  snackbarConfig: MatSnackBarConfig = {
+    duration: 3000,
+    verticalPosition: 'top',
+  };
 
   getCategories(): Observable<Category[]> {
     const categories = query(
@@ -125,9 +130,11 @@ export class CategoryService {
       category,
     );
 
-    this.snackbar.open('Added category: ' + category.name, 'Dismiss', {
-      duration: 3000,
-    });
+    this.snackbar.open(
+      'Added category: ' + category.name,
+      'Dismiss',
+      this.snackbarConfig,
+    );
   }
 
   updateCategory(id: string, category: Category) {
@@ -142,9 +149,11 @@ export class CategoryService {
       category,
     );
 
-    this.snackbar.open('Updated category: ' + category.name, 'Dismiss', {
-      duration: 3000,
-    });
+    this.snackbar.open(
+      'Updated category: ' + category.name,
+      'Dismiss',
+      this.snackbarConfig,
+    );
   }
 
   removeCategory(category: Category) {
@@ -158,8 +167,10 @@ export class CategoryService {
       ),
     );
 
-    this.snackbar.open('Removed category: ' + category.name, 'Dismiss', {
-      duration: 3000,
-    });
+    this.snackbar.open(
+      'Removed category: ' + category.name,
+      'Dismiss',
+      this.snackbarConfig,
+    );
   }
 }
