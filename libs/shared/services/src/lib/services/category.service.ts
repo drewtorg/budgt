@@ -11,6 +11,7 @@ import {
   where,
 } from '@angular/fire/firestore';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { capitalize } from '@budgt/shared/functions';
 import {
   Category,
   CategoryGroup,
@@ -75,7 +76,7 @@ export class CategoryService {
             const group = acc[cur.label.toString()];
             if (!group) {
               acc[cur.label.toString()] = {
-                label: cur.label[0].toLocaleUpperCase() + cur.label.slice(1),
+                label: capitalize(cur.label),
                 categories: [cur],
               };
             } else {

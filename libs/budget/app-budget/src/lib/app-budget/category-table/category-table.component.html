@@ -1,4 +1,4 @@
-@if (categories != null) {
+@if (categories != null && totals !== null) {
   @if (categories.length) {
     <table
       mat-table
@@ -34,7 +34,9 @@
         <td mat-cell *matCellDef="let element">
           {{ element.expectedAmount | amount }}
         </td>
-        <td mat-footer-cell *matFooterCellDef>{{ totalExpected | amount }}</td>
+        <td mat-footer-cell *matFooterCellDef>
+          {{ totals.expected | amount }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="actualAmount">
@@ -59,7 +61,7 @@
             <span>{{ element.actualAmount | amount }}</span>
             @if (element.actualAmount) {
               <span class="percent"
-                >({{ element.actualAmount / totalActual | percent }})</span
+                >({{ element.actualAmount / totals.actual | percent }})</span
               >
             }
           </div>
@@ -67,11 +69,11 @@
         <td mat-footer-cell *matFooterCellDef>
           <div
             class="actual-amount-cell"
-            [ngClass]="getActualAmountCellClass(totalActual, totalExpected)"
+            [ngClass]="getActualAmountCellClass(totals.actual, totals.expected)"
           >
-            <span>{{ totalActual | amount }}</span>
+            <span>{{ totals.actual | amount }}</span>
             <span class="percent"
-              >({{ totalActual / (totalIncome || 0) | percent }})</span
+              >({{ totals.actual / (totalIncome || 0) | percent }})</span
             >
           </div>
         </td>

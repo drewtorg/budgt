@@ -1,0 +1,20 @@
+.spinner-container {
+  display: flex;
+  justify-content: center;
+}
+
+.income {
+  color: #18864b;
+}
+
+.need {
+  color: #f44336;
+}
+
+.dreams {
+  color: #1095c9;
+}
+
+.want {
+  color: #f44336;
+}

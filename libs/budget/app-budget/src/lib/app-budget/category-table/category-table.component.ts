@@ -9,7 +9,6 @@ import {
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog } from '@angular/material/dialog';
-import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -18,6 +17,7 @@ import {
   Category,
   CategoryType,
   Label,
+  Totals,
   Variability,
 } from '@budgt/shared/types';
 import { AmountPipe } from '@budgt/shared/util';
@@ -31,7 +31,6 @@ import { EditCategoryModalComponent } from '../edit-category-modal/edit-category
     MatTableModule,
     MatSortModule,
     MatProgressSpinnerModule,
-    MatIconModule,
     MatButtonModule,
     AmountPipe,
     PercentPipe,
@@ -43,6 +42,7 @@ export class CategoryTableComponent implements OnChanges {
   @Input() categories: Category[] | null = null;
   @Input() type = CategoryType.Expense;
   @Input() label = Label.Want;
+  @Input() totals: Totals | null = null;
   @Input() totalIncome: number | null = null;
 
   @ViewChild(MatSort) set sort(sort: MatSort | undefined) {
@@ -59,18 +59,6 @@ export class CategoryTableComponent implements OnChanges {
   Variability = Variability;
 
   displayedColumns = ['name', 'expectedAmount', 'actualAmount'];
-
-  get totalExpected() {
-    return this.dataSource.data
-      .map((c) => c.expectedAmount)
-      .reduce((acc, cur) => acc + cur, 0);
-  }
-
-  get totalActual() {
-    return this.dataSource.data
-      .map((c) => c.actualAmount)
-      .reduce((acc, cur) => acc + cur, 0);
-  }
 
   ngOnChanges(changes: SimpleChanges) {
     const categories = changes['categories']?.currentValue;

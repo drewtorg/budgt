@@ -6,12 +6,13 @@
     @if (budgetService.hasCurrentBudget()) {
       <mat-card>
         <mat-card-header>
-          <mat-card-title> Income </mat-card-title>
+          <mat-card-title>Income</mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <budgt-category-table
             [type]="CategoryType.Income"
             [totalIncome]="totalIncome$ | async"
+            [totals]="incomeTotals$ | async"
             [categories]="incomeCategories$ | async"
           ></budgt-category-table>
         </mat-card-content>
@@ -30,7 +31,7 @@
 
       <mat-card>
         <mat-card-header>
-          <mat-card-title> Expenses </mat-card-title>
+          <mat-card-title>Expenses</mat-card-title>
         </mat-card-header>
         <mat-card-content>
           <h4>Needs</h4>
@@ -38,6 +39,7 @@
             [type]="CategoryType.Expense"
             [label]="Label.Need"
             [totalIncome]="totalIncome$ | async"
+            [totals]="needsTotals$ | async"
             [categories]="needsExpenses$ | async"
           ></budgt-category-table>
           <h4>Dreams</h4>
@@ -45,6 +47,7 @@
             [type]="CategoryType.Expense"
             [label]="Label.Dreams"
             [totalIncome]="totalIncome$ | async"
+            [totals]="dreamsTotals$ | async"
             [categories]="dreamsExpenses$ | async"
           ></budgt-category-table>
           <h4>Wants</h4>
@@ -52,6 +55,7 @@
             [type]="CategoryType.Expense"
             [label]="Label.Want"
             [totalIncome]="totalIncome$ | async"
+            [totals]="wantsTotals$ | async"
             [categories]="wantsExpenses$ | async"
           ></budgt-category-table>
         </mat-card-content>
@@ -66,6 +70,17 @@
             </button>
           </div>
         </mat-card-footer>
+      </mat-card>
+
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Totals</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <budgt-final-results-table
+            [totals]="allTotals$ | async"
+          ></budgt-final-results-table>
+        </mat-card-content>
       </mat-card>
     } @else {
       <p>No budget for this month</p>
