@@ -13,7 +13,7 @@ import {
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { Expense } from '@budgt/shared/types';
 import { AmountPipe } from '@budgt/shared/util';
-import { Observable, switchMap } from 'rxjs';
+import { Observable, of, switchMap } from 'rxjs';
 import { BudgetService } from './budget.service';
 
 @Injectable({
@@ -31,56 +31,51 @@ export class ExpenseService {
   };
 
   getExpenses(): Observable<Expense[]> {
-    const expenses = query(
-      collection(
-        this.firestore,
-        'budget',
-        this.budgetService.currentBudget().id,
-        'expenses',
-      ),
-    );
     return this.budgetService.loadBudget$.pipe(
-      switchMap(
-        () =>
-          collectionData(expenses, {
-            idField: 'id',
-          }) as Observable<Expense[]>,
-      ),
+      switchMap(() => {
+        const budgetId = this.budgetService.currentBudget()?.id;
+        if (!budgetId) {
+          return of([]);
+        }
+
+        const expenses = query(
+          collection(this.firestore, 'budget', budgetId, 'expenses'),
+        );
+        return collectionData(expenses, {
+          idField: 'id',
+        }) as Observable<Expense[]>;
+      }),
     );
   }
 
   getExpensesByCategory(category: string): Observable<Expense[]> {
-    const expenses = query(
-      collection(
-        this.firestore,
-        'budget',
-        this.budgetService.currentBudget().id,
-        'expenses',
-      ),
-      where('category', '==', category),
-    );
     return this.budgetService.loadBudget$.pipe(
-      switchMap(
-        () =>
-          collectionData(expenses, {
-            idField: 'id',
-          }) as Observable<Expense[]>,
-      ),
+      switchMap(() => {
+        const budgetId = this.budgetService.currentBudget()?.id;
+        if (!budgetId) {
+          return of([]);
+        }
+
+        const expenses = query(
+          collection(this.firestore, 'budget', budgetId, 'expenses'),
+          where('category', '==', category),
+        );
+        return collectionData(expenses, {
+          idField: 'id',
+        }) as Observable<Expense[]>;
+      }),
     );
   }
 
   addExpense(expense: Expense) {
-    addDoc(
-      collection(
-        this.firestore,
-        'budget',
-        this.budgetService.currentBudget().id,
-        'expenses',
-      ),
-      {
-        ...expense,
-      },
-    );
+    const budgetId = this.budgetService.currentBudget()?.id;
+    if (!budgetId) {
+      return;
+    }
+
+    addDoc(collection(this.firestore, 'budget', budgetId, 'expenses'), {
+      ...expense,
+    });
 
     this.snackbar.open(
       'Added expense for ' + this.amountPipe.transform(expense.amount),
@@ -90,16 +85,12 @@ export class ExpenseService {
   }
 
   updateExpense(id: string, expense: Expense) {
-    setDoc(
-      doc(
-        this.firestore,
-        'budget',
-        this.budgetService.currentBudget().id,
-        'expenses',
-        id,
-      ),
-      expense,
-    );
+    const budgetId = this.budgetService.currentBudget()?.id;
+    if (!budgetId) {
+      return;
+    }
+
+    setDoc(doc(this.firestore, 'budget', budgetId, 'expenses', id), expense);
 
     this.snackbar.open(
       'Updated expense for: ' + this.amountPipe.transform(expense.amount),
@@ -109,15 +100,12 @@ export class ExpenseService {
   }
 
   removeExpense(expense: Expense) {
-    deleteDoc(
-      doc(
-        this.firestore,
-        'budget',
-        this.budgetService.currentBudget().id,
-        'expenses',
-        expense.id,
-      ),
-    );
+    const budgetId = this.budgetService.currentBudget()?.id;
+    if (!budgetId) {
+      return;
+    }
+
+    deleteDoc(doc(this.firestore, 'budget', budgetId, 'expenses', expense.id));
 
     this.snackbar.open(
       'Removed expense for ' + this.amountPipe.transform(expense.amount),

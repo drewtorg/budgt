@@ -53,7 +53,7 @@ export class FinalResultsTableComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     const totals = changes['totals']?.currentValue;
     if (totals) {
-      this.dataSource.data = totals;
+      this.dataSource.data = [...totals];
     }
   }
 

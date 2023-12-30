@@ -19,7 +19,7 @@ import {
   Label,
   Variability,
 } from '@budgt/shared/types';
-import { Observable, map, switchMap } from 'rxjs';
+import { Observable, map, of, switchMap } from 'rxjs';
 import { BudgetService } from './budget.service';
 
 @Injectable({
@@ -36,40 +36,46 @@ export class CategoryService {
   };
 
   getCategories(): Observable<Category[]> {
-    return this.getCategoriesByBudgetId(this.budgetService.currentBudget().id);
+    return this.budgetService.loadBudget$.pipe(
+      switchMap(() => {
+        const budgetId = this.budgetService.currentBudget()?.id;
+        if (!budgetId) {
+          return of([]);
+        }
+        const categories = query(
+          collection(this.firestore, 'budget', budgetId, 'categories'),
+        );
+        return collectionData(categories, {
+          idField: 'id',
+        }) as Observable<Category[]>;
+      }),
+    );
   }
 
   getCategoriesByBudgetId(id: string): Observable<Category[]> {
     const categories = query(
       collection(this.firestore, 'budget', id, 'categories'),
     );
-    return this.budgetService.loadBudget$.pipe(
-      switchMap(
-        () =>
-          collectionData(categories, {
-            idField: 'id',
-          }) as Observable<Category[]>,
-      ),
-    );
+    return collectionData(categories, {
+      idField: 'id',
+    }) as Observable<Category[]>;
   }
 
   getExpenseCategories(): Observable<Category[]> {
-    const categories = query(
-      collection(
-        this.firestore,
-        'budget',
-        this.budgetService.currentBudget().id,
-        'categories',
-      ),
-      where('type', '==', 'expense'),
-    );
     return this.budgetService.loadBudget$.pipe(
-      switchMap(
-        () =>
-          collectionData(categories, {
-            idField: 'id',
-          }) as Observable<Category[]>,
-      ),
+      switchMap(() => {
+        const budgetId = this.budgetService.currentBudget()?.id;
+        if (!budgetId) {
+          return of([]);
+        }
+        const categories = query(
+          collection(this.firestore, 'budget', budgetId, 'categories'),
+          where('type', '==', 'expense'),
+        );
+        return collectionData(categories, {
+          idField: 'id',
+        }) as Observable<Category[]>;
+      }),
     );
   }
 
@@ -120,13 +126,13 @@ export class CategoryService {
   }
 
   addCategory(category: Category) {
+    const budgetId = this.budgetService.currentBudget()?.id;
+    if (!budgetId) {
+      return;
+    }
+
     addDoc(
-      collection(
-        this.firestore,
-        'budget',
-        this.budgetService.currentBudget().id,
-        'categories',
-      ),
+      collection(this.firestore, 'budget', budgetId, 'categories'),
       category,
     );
 
@@ -138,15 +144,15 @@ export class CategoryService {
   }
 
   addCategories(categories: Category[]) {
+    const budgetId = this.budgetService.currentBudget()?.id;
+    if (!budgetId) {
+      return;
+    }
+
     const batch = writeBatch(this.firestore);
     categories.forEach((c) => {
       const ref = doc(
-        collection(
-          this.firestore,
-          'budget',
-          this.budgetService.currentBudget().id,
-          'categories',
-        ),
+        collection(this.firestore, 'budget', budgetId, 'categories'),
       );
       batch.set(ref, c);
     });
@@ -154,16 +160,12 @@ export class CategoryService {
   }
 
   updateCategory(id: string, category: Category) {
-    setDoc(
-      doc(
-        this.firestore,
-        'budget',
-        this.budgetService.currentBudget().id,
-        'categories',
-        id,
-      ),
-      category,
-    );
+    const budgetId = this.budgetService.currentBudget()?.id;
+    if (!budgetId) {
+      return;
+    }
+
+    setDoc(doc(this.firestore, 'budget', budgetId, 'categories', id), category);
 
     this.snackbar.open(
       'Updated category: ' + category.name,
@@ -173,14 +175,13 @@ export class CategoryService {
   }
 
   removeCategory(category: Category) {
+    const budgetId = this.budgetService.currentBudget()?.id;
+    if (!budgetId) {
+      return;
+    }
+
     deleteDoc(
-      doc(
-        this.firestore,
-        'budget',
-        this.budgetService.currentBudget().id,
-        'categories',
-        category.id,
-      ),
+      doc(this.firestore, 'budget', budgetId, 'categories', category.id),
     );
 
     this.snackbar.open(

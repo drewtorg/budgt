@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialog } from '@angular/material/dialog';
 import {
+  UiCreateMonthComponent,
   UiMonthChangerComponent,
   UiPageComponent,
 } from '@budgt/shared/components';
@@ -38,6 +39,7 @@ import { FinalResultsTableComponent } from './final-results-table/final-results-
     CategoryTableComponent,
     MonthYearPipe,
     UiMonthChangerComponent,
+    UiCreateMonthComponent,
     FinalResultsTableComponent,
   ],
   templateUrl: './app-budget.component.html',

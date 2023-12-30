@@ -56,7 +56,7 @@ export class BucketTableComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     const buckets = changes['buckets'].currentValue;
     if (buckets) {
-      this.dataSource.data = buckets;
+      this.dataSource.data = [...buckets];
     }
   }
 

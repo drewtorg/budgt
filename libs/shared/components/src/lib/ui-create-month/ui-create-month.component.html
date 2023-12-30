@@ -1,12 +1,20 @@
-<form [formGroup]="createBudgetForm" (ngSubmit)="onAddMonth()">
+<p>Select a month to use as the template for this month.</p>
+
+<form
+  [formGroup]="createBudgetForm"
+  (ngSubmit)="onAddMonth()"
+  class="budget-form"
+>
   <mat-form-field appearance="outline">
     <mat-label>Template Budget</mat-label>
     <select formControlName="budget" matNativeControl>
       @for (budget of availableBudgets; track budget.id) {
-        <option [value]="budget">{{ budget.month }}</option>
+        <option [value]="budget">
+          {{ getMonthYear(budget.month) | monthYear }}
+        </option>
       }
     </select>
   </mat-form-field>
 
-  <button mat-button color="primary">Initialize Month</button>
+  <button mat-flat-button color="primary">Add Month</button>
 </form>

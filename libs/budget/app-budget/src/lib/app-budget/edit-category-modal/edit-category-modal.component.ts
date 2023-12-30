@@ -101,7 +101,7 @@ export class EditCategoryModalComponent implements OnInit {
     if (this.category.type === CategoryType.Expense) {
       this.expenses$ = this.expenseService
         .getExpensesByCategory(this.category.name)
-        .pipe(tap((expenses) => (this.dataSource.data = expenses)));
+        .pipe(tap((expenses) => (this.dataSource.data = [...expenses])));
     }
   }
 

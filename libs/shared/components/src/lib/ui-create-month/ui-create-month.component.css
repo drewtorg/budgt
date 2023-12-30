@@ -30,3 +30,11 @@
     grid-column-end: span 6;
   }
 }
+
+.budget-form {
+  display: flex;
+  justify-content: space-around;
+  align-items: baseline;
+  margin-top: 32px;
+  gap: 8px;
+}

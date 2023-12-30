@@ -21,14 +21,11 @@ export class BudgetService {
   private route = inject(ActivatedRoute);
   private workspaceService = inject(WorkspaceService);
 
-  currentBudget = signal<Budget>({
-    id: '',
-    date: '',
-  });
+  currentBudget = signal<Budget | undefined>(undefined);
   currentMonth = signal(new Date().getMonth() + 1);
   currentYear = signal(new Date().getFullYear());
 
-  hasCurrentBudget = computed(() => !!this.currentBudget().id);
+  hasCurrentBudget = computed(() => !!this.currentBudget());
   currentBudgetDate = computed(
     () => new Date(this.currentYear(), this.currentMonth() - 1, 1),
   );
@@ -45,11 +42,7 @@ export class BudgetService {
         this.getBudgetByDate(this.currentMonth(), this.currentYear())
           .pipe(
             take(1),
-            tap((budget) =>
-              this.currentBudget.set(
-                budget ? { ...budget } : { id: '', date: '' },
-              ),
-            ),
+            tap((budget) => this.currentBudget.set(budget)),
             tap(() => this.changeBudgetMonth$.next()),
           )
           .subscribe();

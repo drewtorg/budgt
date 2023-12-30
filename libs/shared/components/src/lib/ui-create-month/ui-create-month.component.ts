@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import {
   BudgetService,
@@ -9,6 +10,7 @@ import {
   WorkspaceService,
 } from '@budgt/shared/services';
 import { Budget } from '@budgt/shared/types';
+import { MonthYearPipe } from '@budgt/shared/util';
 import { take, tap } from 'rxjs';
 
 @Component({
@@ -16,9 +18,11 @@ import { take, tap } from 'rxjs';
   standalone: true,
   imports: [
     MatButtonModule,
-    MatFormFieldModule,
     MatSelectModule,
+    MatInputModule,
+    MatFormFieldModule,
     ReactiveFormsModule,
+    MonthYearPipe,
   ],
   templateUrl: './ui-create-month.component.html',
   styleUrl: './ui-create-month.component.css',
@@ -46,6 +50,14 @@ export class UiCreateMonthComponent {
     budget: [this.availableBudgets[0]],
   });
 
+  getMonthYear(date: string) {
+    const [year, month] = date.split('-');
+    return {
+      month: parseInt(month),
+      year: parseInt(year),
+    };
+  }
+
   onAddMonth() {
     const templateBudget = this.createBudgetForm.controls.budget.value;
     this.categoryService
@@ -64,7 +76,7 @@ export class UiCreateMonthComponent {
               tap(async (addedBudget) => {
                 this.budgetService.currentBudget.set(addedBudget);
                 await this.categoryService.addCategories(categories);
-                const [year, month] = addedBudget.date.split('-');
+                const { year, month } = this.getMonthYear(addedBudget.date);
                 this.workspaceService.addBudgetToWorkspace(
                   addedBudget.id,
                   [year, month].join('-'),
