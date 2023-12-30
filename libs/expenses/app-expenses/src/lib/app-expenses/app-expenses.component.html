@@ -9,10 +9,7 @@
         <budgt-expense-table></budgt-expense-table>
       } @else {
         <p>No budget created for this month</p>
-        <!-- TODO: create wrapper component for changing months that
-          will have the arrows and a button to  create a new  budget
-          based on previous months budget when no budget exists  for
-          current month-->
+        <budgt-ui-create-month></budgt-ui-create-month>
       }
     </mat-card-content>
     <mat-card-footer>

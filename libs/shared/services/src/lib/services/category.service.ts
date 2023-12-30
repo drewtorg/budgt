@@ -9,6 +9,7 @@ import {
   query,
   setDoc,
   where,
+  writeBatch,
 } from '@angular/fire/firestore';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { capitalize } from '@budgt/shared/functions';
@@ -35,13 +36,12 @@ export class CategoryService {
   };
 
   getCategories(): Observable<Category[]> {
+    return this.getCategoriesByBudgetId(this.budgetService.currentBudget().id);
+  }
+
+  getCategoriesByBudgetId(id: string): Observable<Category[]> {
     const categories = query(
-      collection(
-        this.firestore,
-        'budget',
-        this.budgetService.currentBudget().id,
-        'categories',
-      ),
+      collection(this.firestore, 'budget', id, 'categories'),
     );
     return this.budgetService.loadBudget$.pipe(
       switchMap(
@@ -135,6 +135,22 @@ export class CategoryService {
       'Dismiss',
       this.snackbarConfig,
     );
+  }
+
+  addCategories(categories: Category[]) {
+    const batch = writeBatch(this.firestore);
+    categories.forEach((c) => {
+      const ref = doc(
+        collection(
+          this.firestore,
+          'budget',
+          this.budgetService.currentBudget().id,
+          'categories',
+        ),
+      );
+      batch.set(ref, c);
+    });
+    batch.commit();
   }
 
   updateCategory(id: string, category: Category) {

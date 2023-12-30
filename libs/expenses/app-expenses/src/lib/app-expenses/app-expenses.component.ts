@@ -4,6 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import {
+  UiCreateMonthComponent,
   UiMonthChangerComponent,
   UiPageComponent,
 } from '@budgt/shared/components';
@@ -25,6 +26,7 @@ import { ExpenseTableComponent } from './expense-table/expense-table.component';
     AddExpenseFormComponent,
     ExpenseTableComponent,
     UiMonthChangerComponent,
+    UiCreateMonthComponent,
   ],
   templateUrl: './app-expenses.component.html',
   styleUrl: './app-expenses.component.css',

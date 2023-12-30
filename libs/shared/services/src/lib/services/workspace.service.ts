@@ -7,11 +7,12 @@ import {
   doc,
   docData,
   query,
+  updateDoc,
   where,
 } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { Workspace } from '@budgt/shared/types';
-import { Observable, filter, map, take, tap } from 'rxjs';
+import { Observable, filter, lastValueFrom, map, take, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -77,10 +78,22 @@ export class WorkspaceService {
     });
   }
 
-  async addWorkspace(workspace: Workspace): Promise<Workspace> {
-    return (await addDoc(
+  addBudgetToWorkspace(budgetId: string, month: string) {
+    const key = 'budgets.' + month;
+    updateDoc(doc(this.firestore, 'workspaces', this.currentWorkspace()!.id), {
+      [key]: budgetId,
+    });
+  }
+
+  async addWorkspace(workspace: Workspace) {
+    const ref = await addDoc(
       collection(this.firestore, 'workspaces'),
       workspace,
-    )) as unknown as Workspace;
+    );
+    return lastValueFrom(
+      docData(ref, {
+        idField: 'id',
+      }),
+    );
   }
 }

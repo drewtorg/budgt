@@ -1,4 +1,3 @@
-import { formatDate } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import {
   NonNullableFormBuilder,
@@ -10,7 +9,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { UiPageComponent } from '@budgt/shared/components';
 import { BudgetService, WorkspaceService } from '@budgt/shared/services';
-import { Budget, Workspace } from '@budgt/shared/types';
 
 @Component({
   selector: 'budgt-app-workspace',
@@ -45,26 +43,26 @@ export class AppWorkspaceComponent {
     );
   }
 
-  async onCreateWorkspace() {
-    const today = new Date();
-    const firstOfMonth = today.setDate(1);
-    const thisMonth = formatDate(firstOfMonth, 'yyyy-MM', 'en-US');
+  // async onCreateWorkspace() {
+  //   const today = new Date();
+  //   const firstOfMonth = today.setDate(1);
+  //   const thisMonth = formatDate(firstOfMonth, 'yyyy-MM', 'en-US');
 
-    const budget = await this.budgetService.addBudget({
-      date: thisMonth,
-      categories: [],
-      expenses: [],
-    } as unknown as Budget);
+  //   const budget = await this.budgetService.addBudget({
+  //     date: thisMonth,
+  //     categories: [],
+  //     expenses: [],
+  //   } as unknown as Budget);
 
-    const workspace = {
-      name: this.workspaceForm.controls.name.value,
-      password: this.workspaceForm.controls.password.value,
-      buckets: [],
-      budgets: {
-        [thisMonth]: budget.id,
-      },
-    } as unknown as Workspace;
+  //   const workspace = {
+  //     name: this.workspaceForm.controls.name.value,
+  //     password: this.workspaceForm.controls.password.value,
+  //     buckets: [],
+  //     budgets: {
+  //       [thisMonth]: budget.id,
+  //     },
+  //   } as unknown as Workspace;
 
-    await this.workspaceService.addWorkspace(workspace);
-  }
+  //   await this.workspaceService.addWorkspace(workspace);
+  // }
 }

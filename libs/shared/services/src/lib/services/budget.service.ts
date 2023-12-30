@@ -7,6 +7,7 @@ import {
   docData,
 } from '@angular/fire/firestore';
 import { ActivatedRoute, Router } from '@angular/router';
+import { dateToString } from '@budgt/shared/functions';
 import { Budget } from '@budgt/shared/types';
 import { Observable, ReplaySubject, combineLatest, of, take, tap } from 'rxjs';
 import { WorkspaceService } from './workspace.service';
@@ -29,7 +30,10 @@ export class BudgetService {
 
   hasCurrentBudget = computed(() => !!this.currentBudget().id);
   currentBudgetDate = computed(
-    () => new Date(`${this.currentYear()}-${this.currentMonth()}-01`),
+    () => new Date(this.currentYear(), this.currentMonth() - 1, 1),
+  );
+  currentBudgetDateString = computed(() =>
+    dateToString(this.currentBudgetDate()),
   );
 
   changeBudgetMonth$ = new ReplaySubject<void>();
@@ -87,7 +91,10 @@ export class BudgetService {
   }
 
   async addBudget(budget: Budget) {
-    return await addDoc(collection(this.firestore, 'budget'), budget);
+    const ref = await addDoc(collection(this.firestore, 'budget'), budget);
+    return docData(ref, {
+      idField: 'id',
+    }) as Observable<Budget>;
   }
 
   changeBudgetMonth(increment: boolean) {
