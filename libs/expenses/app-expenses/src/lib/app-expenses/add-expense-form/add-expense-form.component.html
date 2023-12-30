@@ -15,6 +15,7 @@
   <mat-form-field appearance="outline">
     <mat-label>Category</mat-label>
     <select formControlName="category" matNativeControl>
+      <option [value]="''">Category</option>
       @for (group of groupedCategories$ | async; track group.label) {
         <optgroup [label]="group.label">
           @for (category of group.categories; track category.id) {
