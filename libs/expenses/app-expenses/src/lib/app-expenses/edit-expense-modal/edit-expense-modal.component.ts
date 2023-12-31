@@ -21,7 +21,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { dateToString } from '@budgt/shared/functions';
 import { CategoryService, ExpenseService } from '@budgt/shared/services';
 import { Expense } from '@budgt/shared/types';
-import { amountMask } from '@budgt/shared/util';
+import { sekMask } from '@budgt/shared/util';
 import { InputMaskModule } from '@ngneat/input-mask';
 
 @Component({
@@ -50,7 +50,7 @@ export class EditExpenseModalComponent {
   matDialogRef = inject(MatDialogRef);
   fb = inject(NonNullableFormBuilder);
 
-  amountMask = amountMask;
+  sekMask = sekMask;
   expense: Expense = inject(MAT_DIALOG_DATA);
   expenseForm = this.fb.group({
     amount: [this.expense.amount, [Validators.required]],

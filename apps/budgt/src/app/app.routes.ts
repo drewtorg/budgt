@@ -38,4 +38,12 @@ export const appRoutes: Route[] = [
       import('@budgt/savings/app-savings').then((c) => c.AppSavingsComponent),
     canActivate: [authenticatedGuard, workspaceGuard],
   },
+  {
+    path: 'accounts',
+    loadComponent: () =>
+      import('@budgt/accounts/app-accounts').then(
+        (c) => c.AppAccountsComponent,
+      ),
+    canActivate: [authenticatedGuard, workspaceGuard],
+  },
 ];

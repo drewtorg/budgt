@@ -20,7 +20,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { BucketService, CategoryService } from '@budgt/shared/services';
 import { Bucket } from '@budgt/shared/types';
-import { AmountPipe, amountMask } from '@budgt/shared/util';
+import { AmountPipe, sekMask } from '@budgt/shared/util';
 import { InputMaskModule } from '@ngneat/input-mask';
 @Component({
   selector: 'budgt-edit-bucket-modal',
@@ -60,7 +60,7 @@ export class EditBucketModalComponent {
   categoryService = inject(CategoryService);
   bucketService = inject(BucketService);
 
-  amountMask = amountMask;
+  sekMask = sekMask;
 
   dataSource = new MatTableDataSource<Bucket>();
 

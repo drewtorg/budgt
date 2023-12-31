@@ -1,0 +1,24 @@
+.mat-mdc-row .mat-mdc-cell {
+  cursor: pointer;
+}
+
+.mat-mdc-row:hover {
+  background-color: #f0f4f7;
+}
+
+.odd-row {
+  background-color: #f8f9fb;
+}
+
+.mat-mdc-footer-row {
+  font-weight: 600;
+}
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+}
+
+.spinner {
+  margin: 16px 0 16px 0;
+}

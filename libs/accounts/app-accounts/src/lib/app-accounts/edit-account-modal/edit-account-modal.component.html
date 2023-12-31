@@ -1,0 +1,76 @@
+<h1 mat-dialog-title>{{ account.name || 'New Account' }}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="accountForm" class="account-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Company</mat-label>
+      <select formControlName="company" matNativeControl>
+        @for (company of companies; track company) {
+          <option [value]="company.value">{{ company.display }}</option>
+        }
+      </select>
+      @if (accountForm.controls.company.invalid) {
+        <mat-error>You must select a value</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Type</mat-label>
+      <select formControlName="type" matNativeControl>
+        @for (type of types; track type) {
+          <option [value]="type.value">{{ type.display }}</option>
+        }
+      </select>
+      @if (accountForm.controls.type.invalid) {
+        <mat-error>You must select a value</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Currency</mat-label>
+      <select formControlName="currency" matNativeControl>
+        @for (currency of currencies; track currency) {
+          <option [value]="currency.value">{{ currency.display }}</option>
+        }
+      </select>
+      @if (accountForm.controls.currency.invalid) {
+        <mat-error>You must select a value</mat-error>
+      }
+    </mat-form-field>
+
+    @if (accountForm.controls.currency.value === Currency.SEK) {
+      <mat-form-field appearance="outline">
+        <mat-label>Current Amount</mat-label>
+        <input
+          matInput
+          formControlName="amount"
+          inputmode="numeric"
+          [inputMask]="sekMask"
+        />
+      </mat-form-field>
+    } @else {
+      <mat-form-field appearance="outline">
+        <mat-label>Current Amount</mat-label>
+        <input
+          matInput
+          formControlName="amount"
+          inputmode="numeric"
+          [inputMask]="usdMask"
+        />
+      </mat-form-field>
+    }
+  </form>
+</div>
+<div mat-dialog-actions class="button-container">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <div class="action-buttons">
+    @if (account.id) {
+      <button mat-button color="warn" (click)="onDelete()">Delete</button>
+    }
+    <button mat-flat-button color="primary" (click)="onSave()">Save</button>
+  </div>
+</div>

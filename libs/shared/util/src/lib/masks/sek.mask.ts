@@ -1,12 +1,12 @@
 import { createMask } from '@ngneat/input-mask';
 
-export const amountMask = createMask<number>({
+export const sekMask = createMask({
   alias: 'currency',
   groupSeparator: ' ',
   digits: 2,
-  digitsOptional: true,
   radixPoint: ',',
   suffix: ' SEK',
+  digitsOptional: true,
   parser: (value: string) =>
     parseFloat(value.replace(/SEK| /g, '').split(',').join('.')),
 });

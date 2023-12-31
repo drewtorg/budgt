@@ -1,0 +1,11 @@
+.account-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 16px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 24px 20px;
+}

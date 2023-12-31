@@ -6,3 +6,8 @@ export interface Totals {
   type: CategoryType;
   label: string;
 }
+
+export interface DisplayEnum {
+  value: string;
+  display: string;
+}

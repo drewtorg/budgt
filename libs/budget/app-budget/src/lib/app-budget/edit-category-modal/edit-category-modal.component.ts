@@ -27,7 +27,7 @@ import {
   Label,
   Variability,
 } from '@budgt/shared/types';
-import { AmountPipe, amountMask } from '@budgt/shared/util';
+import { AmountPipe, sekMask } from '@budgt/shared/util';
 import { InputMaskModule } from '@ngneat/input-mask';
 import { Observable, of, tap } from 'rxjs';
 @Component({
@@ -70,7 +70,7 @@ export class EditCategoryModalComponent implements OnInit {
   CategoryType = CategoryType;
   Variability = Variability;
   Label = Label;
-  amountMask = amountMask;
+  sekMask = sekMask;
 
   dataSource = new MatTableDataSource<Expense>();
 

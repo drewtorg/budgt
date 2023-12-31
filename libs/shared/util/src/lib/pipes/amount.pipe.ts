@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { Currency } from '@budgt/shared/types';
 
 @Pipe({
   name: 'amount',
@@ -6,18 +7,27 @@ import { Pipe, PipeTransform } from '@angular/core';
   pure: true,
 })
 export class AmountPipe implements PipeTransform {
-  transform(value: number | null, digits = 0): string {
+  transform(value: number | null, currency = Currency.SEK, digits = 0): string {
     if (value === null) {
       return '';
     }
 
-    return new Intl.NumberFormat('sv-SE', {
+    if (currency === Currency.SEK) {
+      return new Intl.NumberFormat('sv-SE', {
+        style: 'currency',
+        currency: 'SEK',
+        minimumFractionDigits: digits,
+        maximumFractionDigits: 2,
+      })
+        .format(value)
+        .replace('kr', 'SEK');
+    }
+
+    return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'SEK',
+      currency: 'USD',
       minimumFractionDigits: digits,
       maximumFractionDigits: 2,
-    })
-      .format(value)
-      .replace('kr', 'SEK');
+    }).format(value);
   }
 }

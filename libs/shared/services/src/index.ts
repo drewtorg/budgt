@@ -1,3 +1,4 @@
+export * from './lib/services/account.service';
 export * from './lib/services/auth.service';
 export * from './lib/services/bucket.service';
 export * from './lib/services/budget.service';

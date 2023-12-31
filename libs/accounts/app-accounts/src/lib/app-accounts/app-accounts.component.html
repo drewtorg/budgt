@@ -1,0 +1,20 @@
+<budgt-ui-page>
+  <h1>Accounts Overview</h1>
+
+  <div class="card-container">
+    <mat-card>
+      <mat-card-content>
+        <budgt-account-table
+          [accounts]="accounts$ | async"
+        ></budgt-account-table>
+      </mat-card-content>
+      <mat-card-footer>
+        <div class="card-footer">
+          <button mat-button color="primary" (click)="onAddAccount()">
+            Add Account
+          </button>
+        </div>
+      </mat-card-footer>
+    </mat-card>
+  </div>
+</budgt-ui-page>

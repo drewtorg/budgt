@@ -13,7 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { dateToString } from '@budgt/shared/functions';
 import { CategoryService, ExpenseService } from '@budgt/shared/services';
 import { Expense } from '@budgt/shared/types';
-import { AmountPipe, amountMask } from '@budgt/shared/util';
+import { AmountPipe, sekMask } from '@budgt/shared/util';
 import { InputMaskModule } from '@ngneat/input-mask';
 
 @Component({
@@ -44,7 +44,7 @@ export class AddExpenseFormComponent {
     category: ['', Validators.required],
     date: [new Date(), Validators.required],
   });
-  amountMask = amountMask;
+  sekMask = sekMask;
   amountPipe = new AmountPipe();
 
   onSubmit() {

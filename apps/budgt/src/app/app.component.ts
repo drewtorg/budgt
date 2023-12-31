@@ -30,7 +30,13 @@ export class AppComponent {
     {
       href: 'savings',
       icon: 'savings',
-      name: 'Savings',
+      name: 'Buckets',
+      active: false,
+    },
+    {
+      href: 'accounts',
+      icon: 'request_quote',
+      name: 'Overview',
       active: false,
     },
   ];

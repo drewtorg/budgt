@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@budgt/accounts/app-accounts": [
+        "libs/accounts/app-accounts/src/index.ts"
+      ],
       "@budgt/budget/app-budget": ["libs/budget/app-budget/src/index.ts"],
       "@budgt/expenses/app-expenses": [
         "libs/expenses/app-expenses/src/index.ts"
@@ -22,12 +25,12 @@
       "@budgt/login/app-login": ["libs/login/app-login/src/index.ts"],
       "@budgt/login/app-workspace": ["libs/login/app-workspace/src/index.ts"],
       "@budgt/savings/app-savings": ["libs/savings/app-savings/src/index.ts"],
-      "@budgt/shared/util": ["libs/shared/util/src/index.ts"],
       "@budgt/shared/components": ["libs/shared/components/src/index.ts"],
       "@budgt/shared/functions": ["libs/shared/functions/src/index.ts"],
       "@budgt/shared/guards": ["libs/shared/guards/src/index.ts"],
       "@budgt/shared/services": ["libs/shared/services/src/index.ts"],
-      "@budgt/shared/types": ["libs/shared/types/src/index.ts"]
+      "@budgt/shared/types": ["libs/shared/types/src/index.ts"],
+      "@budgt/shared/util": ["libs/shared/util/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
