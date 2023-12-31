@@ -58,11 +58,7 @@ export class FinalResultsTableComponent implements OnChanges {
   }
 
   getName(totals: Totals) {
-    if (totals.type === CategoryType.Income) {
-      return 'Income';
-    }
-
-    return capitalize(totals?.label);
+    return capitalize(totals.label);
   }
 
   getActualAmountCellClass(totals: Totals) {

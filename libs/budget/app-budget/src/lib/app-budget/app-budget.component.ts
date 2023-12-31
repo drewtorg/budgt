@@ -74,14 +74,14 @@ export class AppBudgetComponent {
     ),
   );
   needsExpenses$ = this.expenseCategories$.pipe(
-    map((categories) => categories.filter((c) => c.label === Label.Need)),
+    map((categories) => categories.filter((c) => c.label === Label.Needs)),
   );
   needsTotals$ = this.needsExpenses$.pipe(
     withLatestFrom(this.expenses$),
     this.mapTotals(),
   );
   wantsExpenses$ = this.expenseCategories$.pipe(
-    map((categories) => categories.filter((c) => c.label === Label.Want)),
+    map((categories) => categories.filter((c) => c.label === Label.Wants)),
   );
   wantsTotals$ = this.wantsExpenses$.pipe(
     withLatestFrom(this.expenses$),
@@ -94,6 +94,26 @@ export class AppBudgetComponent {
     withLatestFrom(this.expenses$),
     this.mapTotals(),
   );
+  unaccountedTotals$ = combineLatest(
+    [
+      this.incomeTotals$,
+      this.needsTotals$,
+      this.dreamsTotals$,
+      this.wantsTotals$,
+    ],
+    (incomeTotals, needsTotals, dreamsTotals, wantsTotals): Totals => {
+      const actual =
+        incomeTotals.actual -
+        (needsTotals.actual + dreamsTotals.actual + wantsTotals.actual);
+
+      return {
+        type: CategoryType.Income,
+        label: 'Unaccounted',
+        actual,
+        expected: 0,
+      };
+    },
+  );
 
   allTotals$ = combineLatest(
     [
@@ -101,12 +121,20 @@ export class AppBudgetComponent {
       this.needsTotals$,
       this.dreamsTotals$,
       this.wantsTotals$,
+      this.unaccountedTotals$,
     ],
-    (incomeTotals, needsTotals, dreamsTotals, wantsTotals) => [
+    (
       incomeTotals,
       needsTotals,
       dreamsTotals,
       wantsTotals,
+      unaccountedTotals,
+    ) => [
+      incomeTotals,
+      needsTotals,
+      dreamsTotals,
+      wantsTotals,
+      unaccountedTotals,
     ],
   );
 
@@ -123,11 +151,15 @@ export class AppBudgetComponent {
             const actual = categories
               .map((c) => calculateActualAmount(c, expenses))
               .reduce((acc, cur) => acc + cur, 0);
+            const category = categories?.[0];
             subscriber.next({
               actual,
               expected,
-              label: categories?.[0].label,
-              type: categories?.[0].type,
+              label:
+                category.type === CategoryType.Income
+                  ? 'Income'
+                  : category.label,
+              type: category.type,
             });
           },
           error(error) {

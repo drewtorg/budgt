@@ -43,7 +43,7 @@ import { EditCategoryModalComponent } from '../edit-category-modal/edit-category
 export class CategoryTableComponent implements OnChanges {
   @Input() categories: Category[] | null = null;
   @Input() type = CategoryType.Expense;
-  @Input() label = Label.Want;
+  @Input() label = Label.Wants;
   @Input() totals: Totals | null = null;
   @Input() totalIncome: number | null = null;
   @Input() expenses: Expense[] | null = null;

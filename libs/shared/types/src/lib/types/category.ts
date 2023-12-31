@@ -19,8 +19,8 @@ export interface CategoryData {
 }
 
 export enum Label {
-  Need = 'need',
-  Want = 'want',
+  Needs = 'need',
+  Wants = 'want',
   Dreams = 'dreams',
 }
 

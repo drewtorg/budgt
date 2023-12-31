@@ -103,8 +103,8 @@ export class CategoryService {
       map(
         (groups) =>
           [
-            groups[Label.Need],
-            groups[Label.Want],
+            groups[Label.Needs],
+            groups[Label.Wants],
             groups[Label.Dreams],
           ] as CategoryGroup[],
       ),
