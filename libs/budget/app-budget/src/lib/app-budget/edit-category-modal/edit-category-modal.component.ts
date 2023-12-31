@@ -119,21 +119,27 @@ export class EditCategoryModalComponent implements OnInit {
       return;
     }
 
-    const c = {
+    let actualAmount = this.categoryForm.controls.actualAmount.value;
+    if (
+      this.category.type === CategoryType.Expense &&
+      this.categoryForm.controls.autoCalculate.value
+    ) {
+      actualAmount = 0;
+    }
+
+    const category = {
       label: this.categoryForm.controls.label.value,
       name: this.categoryForm.controls.name.value,
       type: this.categoryForm.controls.type.value,
       variability: this.categoryForm.controls.variability.value,
-      actualAmount: this.categoryForm.controls.autoCalculate.value
-        ? 0
-        : this.categoryForm.controls.actualAmount.value,
+      actualAmount,
       expectedAmount: this.categoryForm.controls.expectedAmount.value,
     } as Category;
 
     if (this.category.id) {
-      this.categoryService.updateCategory(this.category.id, c);
+      this.categoryService.updateCategory(this.category.id, category);
     } else {
-      this.categoryService.addCategory(c);
+      this.categoryService.addCategory(category);
     }
 
     this.matDialogRef.close();
