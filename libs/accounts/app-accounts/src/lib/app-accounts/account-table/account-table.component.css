@@ -22,3 +22,13 @@
 .spinner {
   margin: 16px 0 16px 0;
 }
+
+.type-cell {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .type-cell {
+    display: table-cell;
+  }
+}

@@ -28,15 +28,14 @@
           *matHeaderCellDef
           mat-sort-header
           sortActionDescription="Sort by type"
+          class="type-cell"
         >
           Type
         </th>
-        <td mat-cell *matCellDef="let element">
+        <td mat-cell *matCellDef="let element" class="type-cell">
           {{ getEnumValue(AccountType, element.type) }}
         </td>
-        <td mat-footer-cell *matFooterCellDef>
-          {{ usdTotal | amount: Currency.USD }}
-        </td>
+        <td mat-footer-cell *matFooterCellDef class="type-cell"></td>
       </ng-container>
 
       <ng-container matColumnDef="name">
@@ -51,7 +50,9 @@
         <td mat-cell *matCellDef="let element">
           {{ element.name }}
         </td>
-        <td mat-footer-cell *matFooterCellDef>{{ sekTotal | amount }}</td>
+        <td mat-footer-cell *matFooterCellDef>
+          {{ usdTotal | amount: Currency.USD }}
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="amount">
@@ -66,7 +67,9 @@
         <td mat-cell *matCellDef="let element">
           {{ element.amount | amount: element.currency }}
         </td>
-        <td mat-footer-cell *matFooterCellDef></td>
+        <td mat-footer-cell *matFooterCellDef>
+          {{ sekTotal | amount }}
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
