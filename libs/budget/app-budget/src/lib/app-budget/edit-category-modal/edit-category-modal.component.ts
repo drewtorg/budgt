@@ -75,7 +75,7 @@ export class EditCategoryModalComponent implements OnInit {
   dataSource = new MatTableDataSource<Expense>();
 
   categoryForm = this.fb.group({
-    actualAmount: [this.category.actualAmount, Validators.required],
+    actualAmount: [this.category.actualAmount],
     expectedAmount: [this.category.expectedAmount, Validators.required],
     label: [
       this.category.label,
