@@ -21,6 +21,7 @@ export enum Company {
   Swedbank = 'Swedbank',
   SBAB = 'SBAB',
   NorthwesternMutual = 'Northwestern Mutual',
+  Nordnet = 'Nordnet',
 }
 
 export enum Currency {
