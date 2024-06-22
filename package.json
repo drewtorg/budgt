@@ -44,7 +44,7 @@
     "@nx/workspace": "19.3.0",
     "@schematics/angular": "18.0.4",
     "@swc-node/register": "1.9.2",
-    "@swc/core": "1.6.1",
+    "@swc/core": "1.6.5",
     "@types/inputmask": "5.0.7",
     "@types/jest": "29.5.12",
     "@types/node": "20.14.2",
