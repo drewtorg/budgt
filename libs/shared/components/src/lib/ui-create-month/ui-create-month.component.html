@@ -9,7 +9,7 @@
     <mat-label>Template Budget</mat-label>
     <select formControlName="budget" matNativeControl>
       @for (budget of availableBudgets; track budget.id) {
-        <option [value]="budget">
+        <option [value]="budget.id">
           {{ getMonthYear(budget.month) | monthYear }}
         </option>
       }

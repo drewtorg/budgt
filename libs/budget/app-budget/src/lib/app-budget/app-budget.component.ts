@@ -152,15 +152,17 @@ export class AppBudgetComponent {
               .map((c) => calculateActualAmount(c, expenses))
               .reduce((acc, cur) => acc + cur, 0);
             const category = categories?.[0];
-            subscriber.next({
-              actual,
-              expected,
-              label:
-                category.type === CategoryType.Income
-                  ? 'Income'
-                  : category.label,
-              type: category.type,
-            });
+            if (category) {
+              subscriber.next({
+                actual,
+                expected,
+                label:
+                  category.type === CategoryType.Income
+                    ? 'Income'
+                    : category.label,
+                type: category.type,
+              });
+            }
           },
           error(error) {
             subscriber.error(error);

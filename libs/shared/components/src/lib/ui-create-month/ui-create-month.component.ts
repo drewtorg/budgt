@@ -47,7 +47,7 @@ export class UiCreateMonthComponent {
     );
 
   createBudgetForm = this.fb.group({
-    budget: [this.availableBudgets[0]],
+    budget: [this.availableBudgets[0].id],
   });
 
   getMonthYear(date: string) {
@@ -59,9 +59,9 @@ export class UiCreateMonthComponent {
   }
 
   onAddMonth() {
-    const templateBudget = this.createBudgetForm.controls.budget.value;
+    const id = this.createBudgetForm.controls.budget.value;
     this.categoryService
-      .getCategoriesByBudgetId(templateBudget.id)
+      .getCategoriesByBudgetId(id)
       .pipe(
         take(1),
         tap(async (categories) => {
