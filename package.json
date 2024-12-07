@@ -57,7 +57,7 @@
     "jest-preset-angular": "14.3.3",
     "jsonc-eslint-parser": "2.4.0",
     "nx": "20.1.4",
-    "prettier": "3.3.3",
+    "prettier": "3.4.2",
     "prettier-plugin-organize-imports": "4.1.0",
     "ts-jest": "29.2.5",
     "ts-node": "10.9.2",
