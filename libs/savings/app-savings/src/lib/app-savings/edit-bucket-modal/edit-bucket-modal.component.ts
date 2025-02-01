@@ -1,4 +1,4 @@
-import { AsyncPipe, DatePipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, ViewChild, inject } from '@angular/core';
 import {
   NonNullableFormBuilder,
@@ -20,7 +20,7 @@ import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { BucketService, CategoryService } from '@budgt/shared/services';
 import { Bucket } from '@budgt/shared/types';
-import { AmountPipe, sekMask } from '@budgt/shared/util';
+import { sekMask } from '@budgt/shared/util';
 import { InputMaskModule } from '@ngneat/input-mask';
 @Component({
   selector: 'budgt-edit-bucket-modal',
@@ -38,8 +38,6 @@ import { InputMaskModule } from '@ngneat/input-mask';
     MatSortModule,
     InputMaskModule,
     AsyncPipe,
-    DatePipe,
-    AmountPipe,
   ],
   templateUrl: './edit-bucket-modal.component.html',
   styleUrl: './edit-bucket-modal.component.css',

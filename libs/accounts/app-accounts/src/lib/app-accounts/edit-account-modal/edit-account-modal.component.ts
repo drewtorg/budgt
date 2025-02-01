@@ -1,4 +1,3 @@
-import { AsyncPipe, DatePipe } from '@angular/common';
 import { Component, ViewChild, inject } from '@angular/core';
 import {
   NonNullableFormBuilder,
@@ -21,7 +20,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { enumToDisplayEnum } from '@budgt/shared/functions';
 import { AccountService, CategoryService } from '@budgt/shared/services';
 import { Account, AccountType, Company, Currency } from '@budgt/shared/types';
-import { AmountPipe, sekMask, usdMask } from '@budgt/shared/util';
+import { sekMask, usdMask } from '@budgt/shared/util';
 import { InputMaskModule } from '@ngneat/input-mask';
 @Component({
   selector: 'budgt-edit-account-modal',
@@ -36,9 +35,6 @@ import { InputMaskModule } from '@ngneat/input-mask';
     MatDialogContent,
     MatDialogActions,
     InputMaskModule,
-    AsyncPipe,
-    DatePipe,
-    AmountPipe,
   ],
   templateUrl: './edit-account-modal.component.html',
   styleUrl: './edit-account-modal.component.css',

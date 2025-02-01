@@ -19,7 +19,7 @@ import {
   Label,
   Variability,
 } from '@budgt/shared/types';
-import { Observable, map, of, switchMap } from 'rxjs';
+import { Observable, map, of, switchMap, tap } from 'rxjs';
 import { BudgetService } from './budget.service';
 
 @Injectable({
@@ -45,9 +45,14 @@ export class CategoryService {
         const categories = query(
           collection(this.firestore, 'budget', budgetId, 'categories'),
         );
-        return collectionData(categories, {
-          idField: 'id',
-        }) as Observable<Category[]>;
+        return (
+          collectionData(categories, {
+            idField: 'id',
+          }) as Observable<Category[]>
+        ).pipe(
+          tap((categories) => console.log(categories)),
+          map((categories) => categories || []),
+        );
       }),
     );
   }
@@ -110,6 +115,7 @@ export class CategoryService {
       ),
       map((groups) =>
         groups.map((g) => {
+          console.log(g.categories);
           const categories = [...g.categories];
           categories.sort((a, b) => {
             if (a.variability !== b.variability) {
