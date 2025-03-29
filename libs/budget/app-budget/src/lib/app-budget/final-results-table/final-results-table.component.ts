@@ -35,6 +35,8 @@ export class FinalResultsTableComponent implements OnChanges {
   categoryService = inject(CategoryService);
   dialog = inject(MatDialog);
 
+  readonly CategoryType = CategoryType;
+
   dataSource = new MatTableDataSource<Totals>();
   amountPipe = new AmountPipe();
   Variability = Variability;
@@ -50,6 +52,17 @@ export class FinalResultsTableComponent implements OnChanges {
     return income?.actual ?? 0;
   }
 
+  get totalExpenses() {
+    if (!this.totals) {
+      return 0;
+    }
+
+    return this.totals
+      .filter((t) => t.type !== CategoryType.Income)
+      .map((total) => total.actual)
+      .reduce((sum, actual) => sum + actual, 0);
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     const totals = changes['totals']?.currentValue;
     if (totals) {
@@ -63,13 +76,9 @@ export class FinalResultsTableComponent implements OnChanges {
 
   getActualAmountCellClass(totals: Totals) {
     if (totals.type === CategoryType.Income) {
-      return {
-        income: true,
-      };
+      return { income: true };
     }
 
-    return {
-      [totals.label.toString()]: true,
-    };
+    return { [totals.label.toString()]: true };
   }
 }

@@ -26,7 +26,11 @@
           *matCellDef="let element"
           [ngClass]="getActualAmountCellClass(element)"
         >
-          {{ element.actual / totalIncome | percent }}
+          @if (element.type === CategoryType.Income) {
+            {{ element.actual / totalIncome | percent }}
+          } @else {
+            {{ element.actual / totalExpenses | percent }}
+          }
         </td>
       </ng-container>
 
