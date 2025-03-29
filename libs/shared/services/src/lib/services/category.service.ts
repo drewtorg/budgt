@@ -19,12 +19,10 @@ import {
   Label,
   Variability,
 } from '@budgt/shared/types';
-import { Observable, map, of, switchMap, tap } from 'rxjs';
+import { Observable, map, of, switchMap } from 'rxjs';
 import { BudgetService } from './budget.service';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class CategoryService {
   private firestore = inject(Firestore);
   private snackbar = inject(MatSnackBar);
@@ -39,6 +37,7 @@ export class CategoryService {
     return this.budgetService.loadBudget$.pipe(
       switchMap(() => {
         const budgetId = this.budgetService.currentBudget()?.id;
+        console.log(budgetId);
         if (!budgetId) {
           return of([]);
         }
@@ -46,13 +45,10 @@ export class CategoryService {
           collection(this.firestore, 'budget', budgetId, 'categories'),
         );
         return (
-          collectionData(categories, {
-            idField: 'id',
-          }) as Observable<Category[]>
-        ).pipe(
-          tap((categories) => console.log(categories)),
-          map((categories) => categories || []),
-        );
+          collectionData(categories, { idField: 'id' }) as Observable<
+            Category[]
+          >
+        ).pipe(map((categories) => categories || []));
       }),
     );
   }
@@ -61,9 +57,9 @@ export class CategoryService {
     const categories = query(
       collection(this.firestore, 'budget', id, 'categories'),
     );
-    return collectionData(categories, {
-      idField: 'id',
-    }) as Observable<Category[]>;
+    return collectionData(categories, { idField: 'id' }) as Observable<
+      Category[]
+    >;
   }
 
   getExpenseCategories(): Observable<Category[]> {
@@ -77,9 +73,9 @@ export class CategoryService {
           collection(this.firestore, 'budget', budgetId, 'categories'),
           where('type', '==', 'expense'),
         );
-        return collectionData(categories, {
-          idField: 'id',
-        }) as Observable<Category[]>;
+        return collectionData(categories, { idField: 'id' }) as Observable<
+          Category[]
+        >;
       }),
     );
   }
@@ -100,9 +96,7 @@ export class CategoryService {
             }
             return acc;
           },
-          {} as {
-            [label: string]: CategoryGroup | undefined;
-          },
+          {} as { [label: string]: CategoryGroup | undefined },
         ),
       ),
       map(
@@ -115,7 +109,6 @@ export class CategoryService {
       ),
       map((groups) =>
         groups.map((g) => {
-          console.log(g.categories);
           const categories = [...g.categories];
           categories.sort((a, b) => {
             if (a.variability !== b.variability) {
