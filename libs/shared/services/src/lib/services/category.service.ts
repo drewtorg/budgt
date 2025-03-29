@@ -37,7 +37,6 @@ export class CategoryService {
     return this.budgetService.loadBudget$.pipe(
       switchMap(() => {
         const budgetId = this.budgetService.currentBudget()?.id;
-        console.log(budgetId);
         if (!budgetId) {
           return of([]);
         }

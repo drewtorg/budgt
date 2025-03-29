@@ -23,7 +23,7 @@ import {
   Totals,
 } from '@budgt/shared/types';
 import { MonthYearPipe } from '@budgt/shared/util';
-import { Observable, combineLatest, map, tap, withLatestFrom } from 'rxjs';
+import { Observable, combineLatest, map, withLatestFrom } from 'rxjs';
 import { CategoryTableComponent } from './category-table/category-table.component';
 import { EditCategoryModalComponent } from './edit-category-modal/edit-category-modal.component';
 import { FinalResultsTableComponent } from './final-results-table/final-results-table.component';
@@ -62,7 +62,6 @@ export class AppBudgetComponent {
     map((categories) =>
       categories.filter((c) => c.type === CategoryType.Income),
     ),
-    tap((c) => console.log(c)),
   );
   incomeTotals$ = this.incomeCategories$.pipe(
     withLatestFrom(this.expenses$),
