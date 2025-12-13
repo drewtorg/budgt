@@ -45,7 +45,7 @@
     "@swc-node/register": "1.11.1",
     "@swc/core": "1.15.3",
     "@types/inputmask": "5.0.7",
-    "@types/node": "24.10.1",
+    "@types/node": "24.10.3",
     "@typescript-eslint/eslint-plugin": "8.48.1",
     "@typescript-eslint/parser": "8.48.1",
     "eslint": "9.39.1",
