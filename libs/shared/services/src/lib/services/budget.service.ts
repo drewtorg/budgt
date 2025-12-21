@@ -37,20 +37,15 @@ export class BudgetService {
   loadBudget$ = combineLatest([this.changeBudgetMonth$]);
 
   constructor() {
-    effect(
-      () => {
-        this.getBudgetByDate(this.currentMonth(), this.currentYear())
-          .pipe(
-            take(1),
-            tap((budget) => this.currentBudget.set(budget)),
-            tap(() => this.changeBudgetMonth$.next()),
-          )
-          .subscribe();
-      },
-      {
-        allowSignalWrites: true,
-      },
-    );
+    effect(() => {
+      this.getBudgetByDate(this.currentMonth(), this.currentYear())
+        .pipe(
+          take(1),
+          tap((budget) => this.currentBudget.set(budget)),
+          tap(() => this.changeBudgetMonth$.next()),
+        )
+        .subscribe();
+    });
 
     this.route.queryParams
       .pipe(
