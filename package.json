@@ -43,7 +43,7 @@
     "@nx/workspace": "22.5.2",
     "@schematics/angular": "20.3.14",
     "@swc-node/register": "1.11.1",
-    "@swc/core": "1.15.11",
+    "@swc/core": "1.15.17",
     "@types/inputmask": "5.0.7",
     "@types/node": "24.10.13",
     "@typescript-eslint/eslint-plugin": "8.56.0",
